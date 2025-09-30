@@ -1,5 +1,3 @@
-USE crm_clinicas;
-
 INSERT INTO EnderecoUnidade (rua, estado, numero, bairro) VALUES
 ('Rua das Flores', 'SP', '123', 'Centro'),
 ('Av. Paulista', 'SP', '456', 'Bela Vista'),
@@ -45,19 +43,12 @@ INSERT INTO EtapaTratamento (descricao, Valor, Status, IdPlanoTratamento) VALUES
 ('Instalação do aparelho', 2000.00, 'Em andamento', 3),
 ('Acompanhamento mensal', 200.00, 'Pendente', 3);
 
-INSERT INTO PagamentoProfissional (ValorPagamentoProfissional, DataPagamentoProfissional, StatusPagamentoProfissional) VALUES
-(5000.00, '2024-01-31', 'Pago'),
-(4500.00, '2024-02-28', 'Pago'),
-(5200.00, '2024-03-31', 'Pendente'),
-(4800.00, '2024-01-31', 'Pago'),
-(5100.00, '2024-02-28', 'Pago');
-
-INSERT INTO Profissional (login, nome, CRO_CRM, especialidade, senha, IdPagamentoProfissional, IdPlanoTratamento, IdTelefonesProfissional) VALUES
-('dr.silva', 'Dr. Carlos Silva', 'CRO123456', 'Endodontia', 'senha123', 1, 1, 1),
-('dra.santos', 'Dra. Maria Santos', 'CRO789012', 'Implantodontia', 'senha456', 2, 2, 2),
-('dr.costa', 'Dr. João Costa', 'CRO345678', 'Ortodontia', 'senha789', 3, 3, 3),
-('dra.oliveira', 'Dra. Ana Oliveira', 'CRO901234', 'Periodontia', 'senha012', 4, 4, 4),
-('dr.ferreira', 'Dr. Pedro Ferreira', 'CRO567890', 'Odontopediatria', 'senha345', 5, 5, 5);
+INSERT INTO PagamentoProfissional (ValorPagamentoProfissional, DataPagamentoProfissional, StatusPagamentoProfissional, IdFinanceiro) VALUES
+(5000.00, '2024-01-31', 'Pago', 1),
+(4500.00, '2024-02-28', 'Pago', 2),
+(5200.00, '2024-03-31', 'Pendente', 3),
+(4800.00, '2024-01-31', 'Pago', 1),
+(5100.00, '2024-02-28', 'Pago', 2);
 
 INSERT INTO Agenda (StatusAgenda, horaAgenda, dataAgenda, IdUnidade, IdProfissional) VALUES
 ('Disponível', '09:00:00', '2024-04-15', 1, 1),
@@ -69,10 +60,17 @@ INSERT INTO Agenda (StatusAgenda, horaAgenda, dataAgenda, IdUnidade, IdProfissio
 ('Disponível', '16:00:00', '2024-04-16', 3, 4),
 ('Ocupada', '17:30:00', '2024-04-16', 3, 5);
 
-INSERT INTO Recepcionista (nomeRecepcionista, SenhaRecepcionista, loginRecepcionista) VALUES
-('Fernanda Lima', 'senha123', 'fernanda.lima'),
-('Roberto Alves', 'senha456', 'roberto.alves'),
-('Carla Mendes', 'senha789', 'carla.mendes');
+INSERT INTO Profissional (login, nome, CRO_CRM, especialidade, senha, IdPagamentoProfissional, IdPlanoTratamento, IdTelefonesProfissional, IdAgenda) VALUES
+('dr.silva', 'Dr. Carlos Silva', 'CRO123456', 'Endodontia', 'senha123', 1, 1, 1, 1),
+('dra.santos', 'Dra. Maria Santos', 'CRO789012', 'Implantodontia', 'senha456', 2, 2, 2, 3),
+('dr.costa', 'Dr. João Costa', 'CRO345678', 'Ortodontia', 'senha789', 3, 3, 3, 5),
+('dra.oliveira', 'Dra. Ana Oliveira', 'CRO901234', 'Periodontia', 'senha012', 4, 4, 4, 7),
+('dr.ferreira', 'Dr. Pedro Ferreira', 'CRO567890', 'Odontopediatria', 'senha345', 5, 5, 5, 8);
+
+INSERT INTO Recepcionista (nomeRecepcionista, SenhaRecepcionista, loginRecepcionista, IdAgendamento) VALUES
+('Fernanda Lima', 'senha123', 'fernanda.lima', 1),
+('Roberto Alves', 'senha456', 'roberto.alves', 3),
+('Carla Mendes', 'senha789', 'carla.mendes', 5);
 
 INSERT INTO EnderecoPaciente (estado, rua, numero, bairro) VALUES
 ('SP', 'Rua das Palmeiras', '100', 'Vila Madalena'),
@@ -94,16 +92,6 @@ INSERT INTO TelefonesPaciente (telefone1, telefone2) VALUES
 (11912345690, 11912345691),
 (11912345692, 11912345693);
 
-INSERT INTO Paciente (email, nome, cpf, IdPlanoTratamento, IdTelefonesPaciente, IdEnderecoPaciente) VALUES
-('joao.silva@email.com', 'João Silva', '12345678901', 1, 1, 1),
-('maria.santos@email.com', 'Maria Santos', '23456789012', 2, 2, 2),
-('pedro.costa@email.com', 'Pedro Costa', '34567890123', 3, 3, 3),
-('ana.oliveira@email.com', 'Ana Oliveira', '45678901234', 4, 4, 4),
-('carlos.ferreira@email.com', 'Carlos Ferreira', '56789012345', 5, 5, 5),
-('julia.mendes@email.com', 'Julia Mendes', '67890123456', 1, 6, 6),
-('lucas.alves@email.com', 'Lucas Alves', '78901234567', 2, 7, 7),
-('fernanda.lima@email.com', 'Fernanda Lima', '89012345678', 3, 8, 8);
-
 INSERT INTO Agendamento (StatusAgendamento, horaAgendamento, dataAgendamento, IdAgenda, IdPaciente, IdRecepsionista) VALUES
 ('Confirmado', '10:30:00', '2024-04-15', 2, 1, 1),
 ('Confirmado', '15:30:00', '2024-04-15', 4, 2, 1),
@@ -124,27 +112,12 @@ INSERT INTO Pagamento (Status, ValorPagamento, dataPagamento, formaPagamento, Id
 ('Cancelado', 400.00, '2024-04-18', 'Dinheiro', 7, 7, 2),
 ('Pago', 200.00, '2024-04-18', 'PIX', 8, 8, 3);
 
-UPDATE PagamentoProfissional SET IdFinanceiro = 1 WHERE IdPagamentoProfissional = 1;
-UPDATE PagamentoProfissional SET IdFinanceiro = 2 WHERE IdPagamentoProfissional = 2;
-UPDATE PagamentoProfissional SET IdFinanceiro = 3 WHERE IdPagamentoProfissional = 3;
-UPDATE PagamentoProfissional SET IdFinanceiro = 1 WHERE IdPagamentoProfissional = 4;
-UPDATE PagamentoProfissional SET IdFinanceiro = 2 WHERE IdPagamentoProfissional = 5;
-
-UPDATE Paciente SET IdPagamento = 1 WHERE IdPaciente = 1;
-UPDATE Paciente SET IdPagamento = 2 WHERE IdPaciente = 2;
-UPDATE Paciente SET IdPagamento = 3 WHERE IdPaciente = 3;
-UPDATE Paciente SET IdPagamento = 4 WHERE IdPaciente = 4;
-UPDATE Paciente SET IdPagamento = 5 WHERE IdPaciente = 5;
-UPDATE Paciente SET IdPagamento = 6 WHERE IdPaciente = 6;
-UPDATE Paciente SET IdPagamento = 7 WHERE IdPaciente = 7;
-UPDATE Paciente SET IdPagamento = 8 WHERE IdPaciente = 8;
-
-UPDATE Profissional SET IdAgenda = 1 WHERE IdProfissional = 1;
-UPDATE Profissional SET IdAgenda = 3 WHERE IdProfissional = 2;
-UPDATE Profissional SET IdAgenda = 5 WHERE IdProfissional = 3;
-UPDATE Profissional SET IdAgenda = 7 WHERE IdProfissional = 4;
-UPDATE Profissional SET IdAgenda = 8 WHERE IdProfissional = 5;
-
-UPDATE Recepcionista SET IdAgendamento = 1 WHERE IdRecepcionista = 1;
-UPDATE Recepcionista SET IdAgendamento = 3 WHERE IdRecepcionista = 2;
-UPDATE Recepcionista SET IdAgendamento = 5 WHERE IdRecepcionista = 3;
+INSERT INTO Paciente (email, nome, cpf, IdPlanoTratamento, IdTelefonesPaciente, IdEnderecoPaciente, IdPagamento) VALUES
+('joao.silva@email.com', 'João Silva', '12345678901', 1, 1, 1, 1),
+('maria.santos@email.com', 'Maria Santos', '23456789012', 2, 2, 2, 2),
+('pedro.costa@email.com', 'Pedro Costa', '34567890123', 3, 3, 3, 3),
+('ana.oliveira@email.com', 'Ana Oliveira', '45678901234', 4, 4, 4, 4),
+('carlos.ferreira@email.com', 'Carlos Ferreira', '56789012345', 5, 5, 5, 5),
+('julia.mendes@email.com', 'Julia Mendes', '67890123456', 1, 6, 6, 6),
+('lucas.alves@email.com', 'Lucas Alves', '78901234567', 2, 7, 7, 7),
+('fernanda.lima@email.com', 'Fernanda Lima', '89012345678', 3, 8, 8, 8);
