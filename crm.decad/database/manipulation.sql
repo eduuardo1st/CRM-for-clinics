@@ -1,4 +1,9 @@
-USE crm_clinicas;
+USE ClinicaDB;
+
+INSERT INTO Relatorio (tipoRelatorio, periodoRelatorio, dadosGeradosRelatorio) VALUES
+('Financeiro Mensal', '2024-01', 'Receitas e despesas do mês'),
+('Financeiro Trimestral', '2024-Q1', 'Relatório trimestral completo'),
+('Atendimentos', '2024-01', 'Número de consultas realizadas');
 
 INSERT INTO EnderecoUnidade (rua, estado, numero, bairro) VALUES
 ('Rua das Flores', 'SP', '123', 'Centro'),
@@ -11,21 +16,53 @@ INSERT INTO Unidade (nomeUnidade, IdEnderecoUnidade) VALUES
 ('Clínica Odontológica Augusta', 3);
 
 INSERT INTO TelefonesProfissional (telefone1, telefone2) VALUES
-(11987654321, 11987654322),
-(11987654323, 11987654324),
-(11987654325, 11987654326),
-(11987654327, 11987654328),
-(11987654329, 11987654330);
+('11987654321', '11987654322'),
+('11987654323', '11987654324'),
+('11987654325', '11987654326'),
+('11987654327', '11987654328'),
+('11987654329', '11987654330');
 
-INSERT INTO Relatorio (tipoRelatorio, periodoRelatorio, dadosGeradosRelatorio) VALUES
-('Financeiro Mensal', '2024-01', 'Receitas e despesas do mês'),
-('Financeiro Trimestral', '2024-Q1', 'Relatório trimestral completo'),
-('Atendimentos', '2024-01', 'Número de consultas realizadas');
+INSERT INTO Profissional (login, nome, cpf, CRO_CRM, especialidade, senha, IdPagamentoProfissional, IdPlanoTratamento, IdTelefonesProfissional) VALUES
+('dr.silva', 'Dr. Carlos Silva', '11122233344', 'CRO123456', 'Endodontia', 'senha123', NULL, NULL, 1),
+('dra.santos', 'Dra. Maria Santos', '22233344455', 'CRO789012', 'Implantodontia', 'senha456', NULL, NULL, 2),
+('dr.costa', 'Dr. João Costa', '33344455566', 'CRO345678', 'Ortodontia', 'senha789', NULL, NULL, 3),
+('dra.oliveira', 'Dra. Ana Oliveira', '44455566677', 'CRO901234', 'Periodontia', 'senha012', NULL, NULL, 4),
+('dr.ferreira', 'Dr. Pedro Ferreira', '55566677788', 'CRO567890', 'Odontopediatria', 'senha345', NULL, NULL, 5);
 
-INSERT INTO Financeiro (senhaFinanceiro, loginFinanceiro, nomeFinanceiro, IdRelatorio) VALUES
-('senha123', 'financeiro1', 'Maria Silva', 1),
-('senha456', 'financeiro2', 'João Santos', 2),
-('senha789', 'financeiro3', 'Ana Costa', 3);
+INSERT INTO Agenda (StatusAgenda, horaAgenda, dataAgenda, IdUnidade, IdProfissional) VALUES
+('Disponível', '09:00:00', '2024-04-15', 1, 1),
+('Ocupada',   '10:30:00', '2024-04-15', 1, 1),
+('Disponível', '14:00:00', '2024-04-15', 1, 2),
+('Ocupada',   '15:30:00', '2024-04-15', 2, 2),
+('Disponível', '08:00:00', '2024-04-16', 2, 3),
+('Ocupada',   '11:00:00', '2024-04-16', 3, 3),
+('Disponível', '16:00:00', '2024-04-16', 3, 4),
+('Ocupada',   '17:30:00', '2024-04-16', 3, 5);
+
+INSERT INTO Recepcionista (nomeRecepcionista, SenhaRecepcionista, loginRecepcionista) VALUES
+('Fernanda Lima', 'senha123', 'fernanda.lima'),
+('Roberto Alves', 'senha456', 'roberto.alves'),
+('Carla Mendes', 'senha789', 'carla.mendes');
+
+INSERT INTO EnderecoPaciente (estado, rua, numero, bairro) VALUES
+('SP', 'Rua das Palmeiras', '100', 'Vila Madalena'),
+('SP', 'Av. Faria Lima', '200', 'Itaim Bibi'),
+('SP', 'Rua Oscar Freire', '300', 'Jardins'),
+('SP', 'Rua Haddock Lobo', '400', 'Cerqueira César'),
+('SP', 'Av. Rebouças', '500', 'Pinheiros'),
+('SP', 'Rua Bela Cintra', '600', 'Consolação'),
+('SP', 'Av. Ibirapuera', '700', 'Moema'),
+('SP', 'Rua Augusta', '800', 'Consolação');
+
+INSERT INTO TelefonesPaciente (telefone1, telefone2) VALUES
+('11912345678', '11912345679'),
+('11912345680', '11912345681'),
+('11912345682', '11912345683'),
+('11912345684', '11912345685'),
+('11912345686', '11912345687'),
+('11912345688', '11912345689'),
+('11912345690', '11912345691'),
+('11912345692', '11912345693');
 
 INSERT INTO PlanoTratamento (descricao, ValorTotal, Status) VALUES
 ('Tratamento de canal', 1500.00, 'Ativo'),
@@ -45,90 +82,47 @@ INSERT INTO EtapaTratamento (descricao, Valor, Status, IdPlanoTratamento) VALUES
 ('Instalação do aparelho', 2000.00, 'Em andamento', 3),
 ('Acompanhamento mensal', 200.00, 'Pendente', 3);
 
-INSERT INTO PagamentoProfissional (ValorPagamentoProfissional, DataPagamentoProfissional, StatusPagamentoProfissional) VALUES
-(5000.00, '2024-01-31', 'Pago'),
-(4500.00, '2024-02-28', 'Pago'),
-(5200.00, '2024-03-31', 'Pendente'),
-(4800.00, '2024-01-31', 'Pago'),
-(5100.00, '2024-02-28', 'Pago');
+INSERT INTO Financeiro (senhaFinanceiro, loginFinanceiro, nomeFinanceiro, IdRelatorio) VALUES
+('senha123', 'financeiro1', 'Maria Silva', 1),
+('senha456', 'financeiro2', 'João Santos', 2),
+('senha789', 'financeiro3', 'Ana Costa', 3);
 
-INSERT INTO Profissional (login, nome, CRO_CRM, especialidade, senha, IdPagamentoProfissional, IdPlanoTratamento, IdTelefonesProfissional) VALUES
-('dr.silva', 'Dr. Carlos Silva', 'CRO123456', 'Endodontia', 'senha123', 1, 1, 1),
-('dra.santos', 'Dra. Maria Santos', 'CRO789012', 'Implantodontia', 'senha456', 2, 2, 2),
-('dr.costa', 'Dr. João Costa', 'CRO345678', 'Ortodontia', 'senha789', 3, 3, 3),
-('dra.oliveira', 'Dra. Ana Oliveira', 'CRO901234', 'Periodontia', 'senha012', 4, 4, 4),
-('dr.ferreira', 'Dr. Pedro Ferreira', 'CRO567890', 'Odontopediatria', 'senha345', 5, 5, 5);
+INSERT INTO PagamentoProfissional (ValorPagamentoProfissional, DataPagamentoProfissional, StatusPagamentoProfissional, IdFinanceiro, IdProfissional) VALUES
+(5000.00, '2024-01-31', 'Pago', 1, 1),
+(4500.00, '2024-02-28', 'Pago', 2, 2),
+(5200.00, '2024-03-31', 'Pendente', 3, 3),
+(4800.00, '2024-01-31', 'Pago', 1, 4),
+(5100.00, '2024-02-28', 'Pago', 2, 5);
 
-INSERT INTO Agenda (StatusAgenda, horaAgenda, dataAgenda, IdUnidade, IdProfissional) VALUES
-('Disponível', '09:00:00', '2024-04-15', 1, 1),
-('Ocupada', '10:30:00', '2024-04-15', 1, 1),
-('Disponível', '14:00:00', '2024-04-15', 1, 2),
-('Ocupada', '15:30:00', '2024-04-15', 2, 2),
-('Disponível', '08:00:00', '2024-04-16', 2, 3),
-('Ocupada', '11:00:00', '2024-04-16', 3, 3),
-('Disponível', '16:00:00', '2024-04-16', 3, 4),
-('Ocupada', '17:30:00', '2024-04-16', 3, 5);
+INSERT INTO Paciente (email, nome, cpf, IdPagamento, IdPlanoTratamento, IdTelefonesPaciente, IdEnderecoPaciente) VALUES
+('joao.silva@email.com', 'João Silva', '12345678901', NULL, 1, 1, 1),
+('maria.santos@email.com', 'Maria Santos', '23456789012', NULL, 2, 2, 2),
+('pedro.costa@email.com', 'Pedro Costa', '34567890123', NULL, 3, 3, 3),
+('ana.oliveira@email.com', 'Ana Oliveira', '45678901234', NULL, 4, 4, 4),
+('carlos.ferreira@email.com', 'Carlos Ferreira', '56789012345', NULL, 5, 5, 5),
+('julia.mendes@email.com', 'Julia Mendes', '67890123456', NULL, 1, 6, 6),
+('lucas.alves@email.com', 'Lucas Alves', '78901234567', NULL, 2, 7, 7),
+('fernanda.lima@email.com', 'Fernanda Lima', '89012345678', NULL, 3, 8, 8);
 
-INSERT INTO Recepcionista (nomeRecepcionista, SenhaRecepcionista, loginRecepcionista) VALUES
-('Fernanda Lima', 'senha123', 'fernanda.lima'),
-('Roberto Alves', 'senha456', 'roberto.alves'),
-('Carla Mendes', 'senha789', 'carla.mendes');
-
-INSERT INTO EnderecoPaciente (estado, rua, numero, bairro) VALUES
-('SP', 'Rua das Palmeiras', '100', 'Vila Madalena'),
-('SP', 'Av. Faria Lima', '200', 'Itaim Bibi'),
-('SP', 'Rua Oscar Freire', '300', 'Jardins'),
-('SP', 'Rua Haddock Lobo', '400', 'Cerqueira César'),
-('SP', 'Av. Rebouças', '500', 'Pinheiros'),
-('SP', 'Rua Bela Cintra', '600', 'Consolação'),
-('SP', 'Av. Ibirapuera', '700', 'Moema'),
-('SP', 'Rua Augusta', '800', 'Consolação');
-
-INSERT INTO TelefonesPaciente (telefone1, telefone2) VALUES
-(11912345678, 11912345679),
-(11912345680, 11912345681),
-(11912345682, 11912345683),
-(11912345684, 11912345685),
-(11912345686, 11912345687),
-(11912345688, 11912345689),
-(11912345690, 11912345691),
-(11912345692, 11912345693);
-
-INSERT INTO Paciente (email, nome, cpf, IdPlanoTratamento, IdTelefonesPaciente, IdEnderecoPaciente) VALUES
-('joao.silva@email.com', 'João Silva', '12345678901', 1, 1, 1),
-('maria.santos@email.com', 'Maria Santos', '23456789012', 2, 2, 2),
-('pedro.costa@email.com', 'Pedro Costa', '34567890123', 3, 3, 3),
-('ana.oliveira@email.com', 'Ana Oliveira', '45678901234', 4, 4, 4),
-('carlos.ferreira@email.com', 'Carlos Ferreira', '56789012345', 5, 5, 5),
-('julia.mendes@email.com', 'Julia Mendes', '67890123456', 1, 6, 6),
-('lucas.alves@email.com', 'Lucas Alves', '78901234567', 2, 7, 7),
-('fernanda.lima@email.com', 'Fernanda Lima', '89012345678', 3, 8, 8);
-
-INSERT INTO Agendamento (StatusAgendamento, horaAgendamento, dataAgendamento, IdAgenda, IdPaciente, IdRecepsionista) VALUES
+INSERT INTO Agendamento (StatusAgendamento, horaAgendamento, dataAgendamento, IdAgenda, IdPaciente, IdRecepcionista) VALUES
 ('Confirmado', '10:30:00', '2024-04-15', 2, 1, 1),
 ('Confirmado', '15:30:00', '2024-04-15', 4, 2, 1),
 ('Confirmado', '11:00:00', '2024-04-16', 6, 3, 2),
 ('Confirmado', '17:30:00', '2024-04-16', 8, 4, 2),
-('Pendente', '09:00:00', '2024-04-17', 1, 5, 3),
-('Pendente', '14:00:00', '2024-04-17', 3, 6, 3),
-('Cancelado', '08:00:00', '2024-04-18', 5, 7, 1),
+('Pendente',   '09:00:00', '2024-04-17', 1, 5, 3),
+('Pendente',   '14:00:00', '2024-04-17', 3, 6, 3),
+('Cancelado',  '08:00:00', '2024-04-18', 5, 7, 1),
 ('Confirmado', '16:00:00', '2024-04-18', 7, 8, 2);
 
 INSERT INTO Pagamento (Status, ValorPagamento, dataPagamento, formaPagamento, IdAgendamento, IdPaciente, IdPlanoTratamento) VALUES
-('Pago', 200.00, '2024-04-15', 'Cartão de Crédito', 1, 1, 1),
-('Pago', 300.00, '2024-04-15', 'PIX', 2, 2, 2),
-('Pendente', 400.00, '2024-04-16', 'Dinheiro', 3, 3, 3),
-('Pago', 200.00, '2024-04-16', 'Cartão de Débito', 4, 4, 4),
-('Pendente', 300.00, '2024-04-17', 'PIX', 5, 5, 5),
-('Pendente', 200.00, '2024-04-17', 'Cartão de Crédito', 6, 6, 1),
-('Cancelado', 400.00, '2024-04-18', 'Dinheiro', 7, 7, 2),
-('Pago', 200.00, '2024-04-18', 'PIX', 8, 8, 3);
-
-UPDATE PagamentoProfissional SET IdFinanceiro = 1 WHERE IdPagamentoProfissional = 1;
-UPDATE PagamentoProfissional SET IdFinanceiro = 2 WHERE IdPagamentoProfissional = 2;
-UPDATE PagamentoProfissional SET IdFinanceiro = 3 WHERE IdPagamentoProfissional = 3;
-UPDATE PagamentoProfissional SET IdFinanceiro = 1 WHERE IdPagamentoProfissional = 4;
-UPDATE PagamentoProfissional SET IdFinanceiro = 2 WHERE IdPagamentoProfissional = 5;
+('Pago',    200.00, '2024-04-15', 'Cartão de Crédito', 1, 1, 1),
+('Pago',    300.00, '2024-04-15', 'PIX',               2, 2, 2),
+('Pendente',400.00, '2024-04-16', 'Dinheiro',         3, 3, 3),
+('Pago',    200.00, '2024-04-16', 'Cartão de Débito',  4, 4, 4),
+('Pendente',300.00, '2024-04-17', 'PIX',               5, 5, 5),
+('Pendente',200.00, '2024-04-17', 'Cartão de Crédito', 6, 6, 1),
+('Cancelado',400.00,'2024-04-18', 'Dinheiro',         7, 7, 2),
+('Pago',    200.00, '2024-04-18', 'PIX',               8, 8, 3);
 
 UPDATE Paciente SET IdPagamento = 1 WHERE IdPaciente = 1;
 UPDATE Paciente SET IdPagamento = 2 WHERE IdPaciente = 2;
@@ -139,12 +133,13 @@ UPDATE Paciente SET IdPagamento = 6 WHERE IdPaciente = 6;
 UPDATE Paciente SET IdPagamento = 7 WHERE IdPaciente = 7;
 UPDATE Paciente SET IdPagamento = 8 WHERE IdPaciente = 8;
 
-UPDATE Profissional SET IdAgenda = 1 WHERE IdProfissional = 1;
-UPDATE Profissional SET IdAgenda = 3 WHERE IdProfissional = 2;
-UPDATE Profissional SET IdAgenda = 5 WHERE IdProfissional = 3;
-UPDATE Profissional SET IdAgenda = 7 WHERE IdProfissional = 4;
-UPDATE Profissional SET IdAgenda = 8 WHERE IdProfissional = 5;
+UPDATE Profissional SET IdPagamentoProfissional = 1 WHERE IdProfissional = 1;
+UPDATE Profissional SET IdPagamentoProfissional = 2 WHERE IdProfissional = 2;
+UPDATE Profissional SET IdPagamentoProfissional = 3 WHERE IdProfissional = 3;
+UPDATE Profissional SET IdPagamentoProfissional = 4 WHERE IdProfissional = 4;
+UPDATE Profissional SET IdPagamentoProfissional = 5 WHERE IdProfissional = 5;
 
-UPDATE Recepcionista SET IdAgendamento = 1 WHERE IdRecepcionista = 1;
-UPDATE Recepcionista SET IdAgendamento = 3 WHERE IdRecepcionista = 2;
-UPDATE Recepcionista SET IdAgendamento = 5 WHERE IdRecepcionista = 3;
+SELECT * FROM Paciente;
+SELECT * FROM Profissional;
+SELECT * FROM Agendamento;
+SELECT * FROM Pagamento;
