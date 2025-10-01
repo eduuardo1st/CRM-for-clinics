@@ -143,3 +143,56 @@ SELECT * FROM Paciente;
 SELECT * FROM Profissional;
 SELECT * FROM Agendamento;
 SELECT * FROM Pagamento;
+
+SELECT
+    p.nome AS NomeDoPaciente,
+    pg.ValorPagamento,
+    pg.dataPagamento,
+    pg.formaPagamento,
+    tp.descricao AS PlanoDeTratamento
+FROM
+    Pagamento pg
+INNER JOIN Paciente p ON pg.IdPaciente = p.IdPaciente
+INNER JOIN PlanoTratamento tp ON pg.IdPlanoTratamento = tp.IdPlanoTratamento
+WHERE
+    pg.Status = 'Pendente';
+    
+SELECT
+    p.nome AS NomeDoPaciente,
+    pr.nome AS NomeDoProfissional,
+    a.dataAgendamento AS DataDoAgendamento,
+    a.horaAgendamento AS HoraDoAgendamento
+FROM
+    Paciente p
+INNER JOIN Agendamento a ON p.IdPaciente = a.IdPaciente
+INNER JOIN Agenda ag ON a.IdAgenda = ag.IdAgenda
+INNER JOIN Profissional pr ON ag.IdProfissional = pr.IdProfissional
+WHERE
+    a.StatusAgendamento = 'Confirmado'
+ORDER BY
+    a.dataAgendamento, a.horaAgendamento;
+    
+SELECT
+    ag.dataAgenda,
+    ag.horaAgenda,
+    ag.StatusAgenda,
+    p.nome AS NomeDoPaciente -- Mostra o nome do paciente se o horário estiver ocupado
+FROM
+    Agenda ag
+LEFT JOIN Agendamento a ON ag.IdAgenda = a.IdAgenda AND a.StatusAgendamento != 'Cancelado'
+LEFT JOIN Paciente p ON a.IdPaciente = p.IdPaciente
+WHERE
+    ag.IdProfissional = 3 -- Exemplo: ID do 'Dr. João Costa'
+ORDER BY
+    ag.dataAgenda, ag.horaAgenda;
+    
+SELECT
+    r.nomeRecepcionista,
+    COUNT(a.IdAgendamento) AS QuantidadeDeAgendamentos
+FROM
+    Recepcionista r
+INNER JOIN Agendamento a ON r.IdRecepcionista = a.IdRecepcionista
+GROUP BY
+    r.nomeRecepcionista
+ORDER BY
+    QuantidadeDeAgendamentos DESC;
