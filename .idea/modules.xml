@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/CRM-for-clinics.iml" filepath="$PROJECT_DIR$/.idea/CRM-for-clinics.iml" />
-      <module fileurl="file://$PROJECT_DIR$/crm.decad/decad.iml" filepath="$PROJECT_DIR$/crm.decad/decad.iml" />
     </modules>
   </component>
 </project>
