@@ -1,0 +1,77 @@
+# ===============================================================
+# =============== ARQUIVOS DE CONFIGURAÇÃO SENSÍVEIS ============
+# ===============================================================
+# Ignorar arquivos de configuração com senhas e segredos
+application.properties
+
+
+# ===============================================================
+# =============== ARQUIVOS GERADOS PELO MAVEN ===================
+# ===============================================================
+# Pasta de saída do build com o código compilado e o .jar
+/target/
+
+# Arquivos de log de builds do Maven
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+
+# ===============================================================
+# =============== ARQUIVOS GERADOS PELO INTELLIJ IDEA ===========
+# ===============================================================
+# Pasta com configurações do projeto específicas do usuário
+.idea/
+
+# Arquivos de módulo do projeto
+*.iml
+*.iws
+
+# Pasta de saída de compilação do IntelliJ
+out/
+
+
+# ===============================================================
+# =============== ARQUIVOS DE SISTEMA OPERACIONAL ===============
+# ===============================================================
+# Arquivos de cache e metadados do macOS, Windows e Linux
+.DS_Store
+Thumbs.db
+*~
+ehthumbs.db
+
+
+# ===============================================================
+# =============== ARQUIVOS DE LOG E TEMPORÁRIOS =================
+# ===============================================================
+# Arquivos de log gerados pela aplicação ou por dependências
+*.log
+logs/
+
+
+# ===============================================================
+# ===== ARQUIVOS GERADOS PELO NODE (PARA O FRONT-END REACT) =====
+# ===============================================================
+# Pasta com todas as dependências do front-end
+/node_modules/
+
+# Arquivos de log do npm e yarn
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Pasta de build da aplicação React
+/build/
+
+# Cache de ferramentas de linting
+.eslintcache
+
+# Arquivos de ambiente do front-end (similar ao application.properties)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

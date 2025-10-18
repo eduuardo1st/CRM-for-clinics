@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9eb41218-c571-4068-b54d-9e69c2ebd044" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DECAD/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/DECAD/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +31,9 @@
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="32s9jEm9SOJuhw4G9XDT7DZ829M" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -75,7 +75,7 @@
       <workItem from="1758198552024" duration="1408000" />
       <workItem from="1760659166518" duration="1762000" />
       <workItem from="1760663786486" duration="966000" />
-      <workItem from="1760819314338" duration="3336000" />
+      <workItem from="1760819314338" duration="4693000" />
     </task>
     <servers />
   </component>
