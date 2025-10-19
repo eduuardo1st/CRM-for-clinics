@@ -1,8 +1,8 @@
 # ===============================================================
 # =============== ARQUIVOS DE CONFIGURAÇÃO SENSÍVEIS ============
 # ===============================================================
-# Ignorar arquivos de configuração com senhas e segredos
-application.properties
+# Ignorar o arquivo de ambiente com as credenciais do banco de dados
+.env
 
 
 # ===============================================================
@@ -50,28 +50,3 @@ ehthumbs.db
 # Arquivos de log gerados pela aplicação ou por dependências
 *.log
 logs/
-
-
-# ===============================================================
-# ===== ARQUIVOS GERADOS PELO NODE (PARA O FRONT-END REACT) =====
-# ===============================================================
-# Pasta com todas as dependências do front-end
-/node_modules/
-
-# Arquivos de log do npm e yarn
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Pasta de build da aplicação React
-/build/
-
-# Cache de ferramentas de linting
-.eslintcache
-
-# Arquivos de ambiente do front-end (similar ao application.properties)
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
