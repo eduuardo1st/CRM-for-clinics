@@ -12,9 +12,5 @@ public class Paciente extends Pessoa{
         this.telefone = telefone;
     }
 
-    public String getNome() { return nome; }
-    public String getEmail() { return email; }
-    public String getCpf() { return cpf; }
-    public String getTelefone() { return telefone; }
     public long getId() { return id; }
 }
