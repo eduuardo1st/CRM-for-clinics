@@ -1,4 +1,4 @@
 package com.decad.crm.model;
 
-public class Profissional {
+public class Profissional extends Pessoa{
 }
