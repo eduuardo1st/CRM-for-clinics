@@ -7,22 +7,19 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConectorBancoDeDados {
-    private static Dotenv dotenv = Dotenv.load();
-    private static String url = dotenv.get("DB_URL");
-    private static String usuario = dotenv.get("DB_USER");
-    private static String senha = dotenv.get("DB_PASSWORD");
-
-    public static Connection getConexao(){
+    public static Connection conectar(){
+        System.out.println("Conectando ao banco de dados...");
         try{
-            return DriverManager.getConnection(url, usuario, senha);
-        } catch (SQLException e) {
-            System.err.println("Erro ao se conectar ao banco de dados: " + e.getMessage());
-            e.printStackTrace();
+            Dotenv dotenv = Dotenv.load();
 
-            if(usuario == null || senha == null || url == null){
-                System.out.println("Provavelmente é o arquivo .env, que não está configurado. Verifique o arquivo que deve estar na raiz do projeto.");
-            }
-            return null;
+            String url = dotenv.get("DB_URL");
+            String user = dotenv.get("DB_USER");
+            String password = dotenv.get("DB_PASSWORD");
+
+            System.out.println("Banco de dados conectado");
+            return DriverManager.getConnection(url, user, password);
+        } catch(SQLException e){
+            throw new RuntimeException("Erro ao conectar ao banco de dados!", e);
         }
     }
 }
