@@ -1,11 +1,7 @@
 package com.decad.crm.model;
 
-public class Paciente {
+public class Paciente extends Pessoa{
     protected long id;
-    protected String nome;
-    protected String email;
-    protected String cpf;
-    protected String telefone;
 
     public Paciente() {}
 
