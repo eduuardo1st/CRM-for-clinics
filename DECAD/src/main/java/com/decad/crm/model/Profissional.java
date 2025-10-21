@@ -1,7 +1,7 @@
 package com.decad.crm.model;
 
 public class Profissional extends Pessoa{
-    protected long id;
+    protected long idProfissional;
     protected String cro_crm;
     protected String especialidade;
 
@@ -23,7 +23,7 @@ public class Profissional extends Pessoa{
         this.especialidade = especialidade;
     }
 
-    public long getId() { return id; }
+    public long getId() { return idProfissional; }
 
     public String getCro_crm() { return cro_crm; }
 

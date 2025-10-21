@@ -1,7 +1,7 @@
 package com.decad.crm.model;
 
 public class Paciente extends Pessoa{
-    protected long id;
+    protected long idPaciente;
 
     public Paciente() {}
 
@@ -12,5 +12,5 @@ public class Paciente extends Pessoa{
         this.telefone = telefone;
     }
 
-    public long getId() { return id; }
+    public long getId() { return idPaciente; }
 }

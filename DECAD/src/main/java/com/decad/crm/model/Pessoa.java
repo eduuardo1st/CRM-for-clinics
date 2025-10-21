@@ -10,5 +10,4 @@ public class Pessoa {
     public String getEmail() { return email; }
     public String getCpf() { return cpf; }
     public String getTelefone() { return telefone; }
-
 }
