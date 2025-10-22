@@ -12,5 +12,7 @@ public class Paciente extends Pessoa{
         this.telefone = telefone;
     }
 
+    public void setIdPaciente(long idPaciente) { this.idPaciente = idPaciente; }
+
     public long getId() { return idPaciente; }
 }
