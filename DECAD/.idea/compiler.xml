@@ -6,16 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="DECAD" />
+        <module name="CRM-for-clinics" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="crm.decad" target="24" />
-    </bytecodeTargetLevel>
-  </component>
-  <component name="JavacSettings">
-    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="DECAD" options="" />
-    </option>
   </component>
 </project>
