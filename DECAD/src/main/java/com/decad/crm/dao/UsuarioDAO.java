@@ -69,6 +69,7 @@ public class UsuarioDAO {
                 usuario.setLogin(rs.getString("login"));
                 usuario.setSenha(rs.getString("senha"));
             }
+
         } catch (SQLException e) {
             System.out.println("Erro ao buscar Usuario por login: " + e.getMessage());
             throw e;
