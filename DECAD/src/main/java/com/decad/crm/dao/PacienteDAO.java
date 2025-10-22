@@ -29,13 +29,13 @@ public class PacienteDAO {
                 System.out.println("Paciente salvo com sucesso!");
                 try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
-                        paciente.setIdPaciente(generatedKeys.getInt(1));
+                        paciente.setIdPaciente(generatedKeys.getLong(1));
                     }
                 }
             }
 
         } catch (SQLException e) {
-            System.out.println("Erro ao salvar Paciente: " + e.getMessage());
+            System.err.println("Erro ao salvar Paciente: " + e.getMessage());
             throw new RuntimeException("Erro ao salvar Paciente: " + e);
         }
     }
@@ -73,8 +73,8 @@ public class PacienteDAO {
                 pacientes.add(passarDadosPacienteRS(resultset));
             }
         } catch (SQLException e) {
-            System.out.println("Erro ao buscar Paciente: " + e.getMessage());
-            throw new RuntimeException("Erro ao buscar Paciente: " + e);
+            System.out.println("Erro ao listar Pacientes: " + e.getMessage());
+            throw new RuntimeException("Erro ao listar Pacientes: " + e);
         }
         return pacientes;
     }
