@@ -79,6 +79,51 @@ public class PacienteDAO {
         return pacientes;
     }
 
+    public void atualizarPaciente(Paciente paciente) {
+        String sql = "UPDATE Paciente SET nomeCompleto = ?, email = ?, cpf = ?, telefone = ? WHERE IdPaciente = ?";
+
+        try (Connection conexao = ConectorBancoDeDados.conectar();
+             PreparedStatement statement = conexao.prepareStatement(sql)) {
+
+            statement.setString(1, paciente.getNome());
+            statement.setString(2, paciente.getEmail());
+            statement.setString(3, paciente.getCpf());
+            statement.setString(4, paciente.getTelefone());
+            statement.setLong(5, paciente.getId());
+
+            int linhasAfetadas = statement.executeUpdate();
+            if (linhasAfetadas > 0) {
+                System.out.println("Paciente atualizado com sucesso!");
+            } else {
+                System.out.println("ERRO! Nenhum paciente possui o ID informado!");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar Paciente: " + e.getMessage());
+            throw new RuntimeException("Erro ao atualizar Paciente: " + e);
+        }
+    }
+
+    public void deletarPaciente(long id) {
+        String sql = "DELETE FROM Paciente WHERE IdPaciente = ?";
+
+        try (Connection conexao = ConectorBancoDeDados.conectar();
+             PreparedStatement statement = conexao.prepareStatement(sql)) {
+            statement.setLong(1, id);
+
+            int linhasAfetadas = statement.executeUpdate();
+            if (linhasAfetadas > 0) {
+                System.out.println("Paciente deletado com sucesso!");
+            } else {
+                System.out.println("ERRO! Nenhum paciente possui o ID informado!");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao deletar paciente: " + e.getMessage());
+            throw new RuntimeException("Erro ao deletar paciente: " + e);
+        }
+    }
+
     private Paciente passarDadosPacienteRS(ResultSet rs) throws SQLException {
         Paciente paciente = new Paciente(
                 rs.getString("nomeCompleto"),
