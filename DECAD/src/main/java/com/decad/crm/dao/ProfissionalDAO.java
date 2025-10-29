@@ -92,7 +92,7 @@ public class ProfissionalDAO {
         return Optional.empty();
     }
 
-    public List<Profissional> ListarProfissional() {
+    public List<Profissional> listarProfissional() {
         String sql = "SELECT IdProfissional, nomeCompleto, email, cpf, telefone FROM Profissional";
         List<Profissional> profissional = new ArrayList<>();
 

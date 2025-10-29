@@ -3,61 +3,26 @@ package com.decad.crm.view;
 import com.decad.crm.dao.PacienteDAO;
 import com.decad.crm.model.Paciente;
 
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class MenuPaciente {
+public class MenuPaciente extends MenuCrudBase {
 
-    private Scanner scanner;
     private PacienteDAO pacienteDAO;
 
     public MenuPaciente(Scanner scanner) {
-        this.scanner = scanner;
+        super(scanner);
         this.pacienteDAO = new PacienteDAO();
     }
 
-    public void mostrarMenuPacientes() {
-        boolean executando = true;
-        while (executando) {
-            System.out.println("\n--- Gerenciamento de Pacientes ---");
-            System.out.println("1. Cadastrar Novo Paciente");
-            System.out.println("2. Listar Todos os Pacientes");
-            System.out.println("3. Atualizar Paciente");
-            System.out.println("4. Deletar Paciente");
-            System.out.println("0. Voltar ao Menu Principal");
-            System.out.print("Escolha sua opção: ");
-
-            try {
-                int escolha = Integer.parseInt(scanner.nextLine());
-
-                switch (escolha) {
-                    case 1:
-                        mostrarCadastrarPaciente();
-                        break;
-                    case 2:
-                        mostrarListarPacientes();
-                        break;
-                    case 3:
-                        mostrarAtualizarPaciente();
-                        break;
-                    case 4:
-                        mostrarDeletarPaciente();
-                        break;
-                    case 0:
-                        executando = false;
-                        break;
-                    default:
-                        System.err.println("Opção inválida. Tente novamente.");
-                }
-            } catch (NumberFormatException e) {
-                System.err.println("Erro: Entrada inválida. Por favor, digite um número.");
-            }
-        }
+    @Override
+    protected String getNomeEntidade() {
+        return "Pacientes";
     }
 
-    private void mostrarCadastrarPaciente() {
+    @Override
+    protected void acaoCadastrar() {
         System.out.println("\n--- Cadastrar Novo Paciente ---");
 
         System.out.print("Nome Completo: ");
@@ -74,6 +39,7 @@ public class MenuPaciente {
             pausar();
             return;
         }
+
         Paciente novoPaciente = new Paciente(nome, email, cpf, telefone);
 
         try {
@@ -85,7 +51,8 @@ public class MenuPaciente {
         pausar();
     }
 
-    private void mostrarListarPacientes() {
+    @Override
+    protected void acaoListar() {
         System.out.println("\n--- Lista de Pacientes Cadastrados ---");
 
         List<Paciente> pacientes;
@@ -103,7 +70,6 @@ public class MenuPaciente {
             return;
         }
 
-        // Formato da tabela
         String formatoTabela = "%-5s | %-30s | %-15s | %-30s | %-15s%n";
         System.out.printf(formatoTabela, "ID", "Nome Completo", "CPF", "Email", "Telefone");
         System.out.println("-----------------------------------------------------------------------------------------------------------");
@@ -121,23 +87,16 @@ public class MenuPaciente {
         pausar();
     }
 
-    private void mostrarAtualizarPaciente() {
+    @Override
+    protected void acaoAtualizar() {
         System.out.println("\n--- Atualizar Paciente ---");
 
-        // Pede o ID
-        long id;
-        try {
-            System.out.print("Digite o ID do paciente que deseja atualizar: ");
-            id = Long.parseLong(scanner.nextLine());
-        } catch (NumberFormatException e) {
-            System.err.println("ID inválido. A atualização foi cancelada.");
-            pausar();
-            return;
-        }
+        Optional<Long> idOpt = pedirId("Digite o ID do paciente que deseja atualizar: ");
+        if (idOpt.isEmpty()) return;
 
-        Optional<Paciente> pacienteOpt = pacienteDAO.buscarPacientePorId(id);
+        Optional<Paciente> pacienteOpt = pacienteDAO.buscarPacientePorId(idOpt.get());
         if (pacienteOpt.isEmpty()) {
-            System.err.println("Paciente com ID " + id + " não encontrado.");
+            System.err.println("Paciente com ID " + idOpt.get() + " não encontrado.");
             pausar();
             return;
         }
@@ -163,32 +122,25 @@ public class MenuPaciente {
 
         try {
             pacienteDAO.atualizarPaciente(paciente);
-            System.out.println("Paciente atualizado com sucesso!");
         } catch (RuntimeException e) {
             System.err.println("Erro ao atualizar paciente: " + e.getMessage());
         }
         pausar();
     }
 
-    private void mostrarDeletarPaciente() {
+    @Override
+    protected void acaoDeletar() {
         System.out.println("\n--- Deletar Paciente ---");
 
-        long id;
-        try {
-            System.out.print("Digite o ID do paciente que deseja DELETAR: ");
-            id = Long.parseLong(scanner.nextLine());
-        } catch (NumberFormatException e) {
-            System.err.println("ID inválido. A operação foi cancelada.");
-            pausar();
-            return;
-        }
+        Optional<Long> idOpt = pedirId("Digite o ID do paciente que deseja DELETAR: ");
+        if (idOpt.isEmpty()) return;
 
-        System.err.print("ATENÇÃO: Isso é permanente. Tem certeza que deseja deletar o paciente ID " + id + "? (S/N): ");
+        System.err.print("ATENÇÃO: Isso é permanente. Tem certeza que deseja deletar o paciente ID " + idOpt.get() + "? (S/N): ");
         String confirmacao = scanner.nextLine();
 
         if (confirmacao.equalsIgnoreCase("S")) {
             try {
-                pacienteDAO.deletarPaciente(id);
+                pacienteDAO.deletarPaciente(idOpt.get());
             } catch (RuntimeException e) {
                 System.err.println("Erro ao deletar paciente: " + e.getMessage());
             }
@@ -196,10 +148,5 @@ public class MenuPaciente {
             System.out.println("Operação cancelada.");
         }
         pausar();
-    }
-
-    private void pausar() {
-        System.out.println("\nPressione ENTER para voltar ao menu...");
-        scanner.nextLine();
     }
 }
