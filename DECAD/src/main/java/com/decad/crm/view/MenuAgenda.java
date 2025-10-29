@@ -1,245 +1,129 @@
 package com.decad.crm.view;
 
+import com.decad.crm.dao.AgendamentoDAO;
+import com.decad.crm.dao.ProfissionalDAO;
+import com.decad.crm.model.Agendamento;
+import com.decad.crm.model.Profissional;
+
+import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
-/**
- * Classe responsável por exibir o menu de agenda do sistema CRM
- * e capturar informações para agendamentos.
- * 
- * @author Sistema CRM
- * @version 1.0
- */
 public class MenuAgenda {
-    
+
     private Scanner scanner;
-    private DateTimeFormatter dateFormatter;
-    private DateTimeFormatter timeFormatter;
-    
-    /**
-     * Construtor da classe MenuAgenda
-     */
-    public MenuAgenda() {
-        this.scanner = new Scanner(System.in);
-        this.dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        this.timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+    private ProfissionalDAO profissionalDAO;
+    private AgendamentoDAO agendamentoDAO;
+    private DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    public MenuAgenda(Scanner scanner) {
+        this.scanner = scanner;
+        this.profissionalDAO = new ProfissionalDAO();
+        this.agendamentoDAO = new AgendamentoDAO();
     }
-    
-    /**
-     * Exibe o menu de agenda e permite seleção de profissional e data
-     * 
-     * @return String[] - Array com [idProfissional, dataSelecionada]
-     */
-    public String[] selecionarProfissionalEData() {
-        System.out.println("\n" + "=".repeat(50));
-        System.out.println("              MENU AGENDA");
-        System.out.println("=".repeat(50));
-        
-        String idProfissional = selecionarProfissional();
-        String dataSelecionada = selecionarData();
-        
-        return new String[]{idProfissional, dataSelecionada};
+
+    public void mostrarConsultarAgenda() {
+        System.out.println("\n--- Consultar Agenda ---");
+
+        Optional<Profissional> profissionalOpt = selecionarProfissional();
+        if (profissionalOpt.isEmpty()) {
+            System.out.println("Consulta cancelada.");
+            return;
+        }
+        Profissional profissional = profissionalOpt.get();
+
+        LocalDate dataLocal = selecionarData();
+
+        try {
+            List<Agendamento> agendamentos = agendamentoDAO.buscarPorProfissionalEData(profissional.getId(), dataLocal);
+
+            exibirAgenda(agendamentos, profissional, dataLocal);
+
+        } catch (RuntimeException e) {
+            System.err.println("Erro de banco de dados ao consultar a agenda: " + e.getMessage());
+        }
     }
-    
-    /**
-     * Permite ao usuário selecionar um profissional
-     * 
-     * @return String - ID do profissional selecionado
-     */
-    private String selecionarProfissional() {
-        System.out.println("\n📋 SELECIONAR PROFISSIONAL:");
-        System.out.println("1. Dr. João Silva - Dentista");
-        System.out.println("2. Dra. Maria Santos - Ortodontista");
-        System.out.println("3. Dr. Pedro Costa - Endodontista");
-        System.out.println("4. Dra. Ana Lima - Periodontista");
-        System.out.println("5. Dr. Carlos Oliveira - Implantodontista");
-        
-        int opcao = -1;
-        boolean entradaValida = false;
-        
-        while (!entradaValida) {
-            System.out.print("Digite o número do profissional (1-5): ");
+
+    private Optional<Profissional> selecionarProfissional() {
+        List<Profissional> profissionais;
+        try {
+            profissionais = profissionalDAO.ListarProfissional();
+        } catch (Exception e) {
+            System.err.println("Erro ao listar profissionais: " + e.getMessage());
+            return Optional.empty();
+        }
+
+
+        if (profissionais.isEmpty()) {
+            System.err.println("Nenhum profissional cadastrado. Impossível consultar agenda.");
+            return Optional.empty();
+        }
+
+        System.out.println("\nSelecione um profissional:");
+        for (int i = 0; i < profissionais.size(); i++) {
+            System.out.printf("%d. %s (Especialidade: %s)\n",
+                    (i + 1),
+                    profissionais.get(i).getNome(),
+                    profissionais.get(i).getEspecialidade());
+        }
+
+        while (true) {
+            System.out.print("Escolha o número (ou 0 para voltar): ");
             try {
-                opcao = Integer.parseInt(scanner.nextLine().trim());
-                if (opcao >= 1 && opcao <= 5) {
-                    entradaValida = true;
+                int escolha = Integer.parseInt(scanner.nextLine());
+
+                if (escolha == 0) {
+                    return Optional.empty();
+                }
+
+                if (escolha > 0 && escolha <= profissionais.size()) {
+                    return Optional.of(profissionais.get(escolha - 1));
                 } else {
-                    System.out.println("❌ Opção inválida! Digite um número entre 1 e 5.");
+                    System.err.println("Escolha inválida. Tente novamente.");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("❌ Entrada inválida! Digite um número.");
+                System.err.println("Entrada inválida. Digite um número.");
             }
         }
-        
-        return String.valueOf(opcao);
     }
-    
-    /**
-     * Permite ao usuário selecionar uma data
-     * 
-     * @return String - Data selecionada no formato dd/MM/yyyy
-     */
-    private String selecionarData() {
-        System.out.println("\n📅 SELECIONAR DATA:");
-        System.out.println("Formato: DD/MM/AAAA (ex: 25/12/2024)");
-        
-        String data = "";
-        boolean dataValida = false;
-        
-        while (!dataValida) {
-            System.out.print("Digite a data desejada: ");
-            data = scanner.nextLine().trim();
-            
+
+    private LocalDate selecionarData() {
+        while (true) {
+            System.out.print("Digite a data (formato dd/MM/yyyy): ");
+            String inputData = scanner.nextLine();
+
             try {
-                LocalDate.parse(data, dateFormatter);
-                dataValida = true;
+                return LocalDate.parse(inputData, formatadorData);
             } catch (DateTimeParseException e) {
-                System.out.println("❌ Data inválida! Use o formato DD/MM/AAAA");
+                System.err.println("Formato de data inválido! Use dd/MM/yyyy (ex: 25/10/2025).");
             }
         }
-        
-        return data;
     }
-    
-    /**
-     * Exibe os horários disponíveis para um profissional em uma data específica
-     * 
-     * @param idProfissional - ID do profissional
-     * @param data - Data no formato dd/MM/yyyy
-     */
-    public void exibirHorariosDisponiveis(String idProfissional, String data) {
-        System.out.println("\n" + "=".repeat(50));
-        System.out.println("           HORÁRIOS DISPONÍVEIS");
-        System.out.println("=".repeat(50));
-        System.out.println("Profissional: " + obterNomeProfissional(idProfissional));
-        System.out.println("Data: " + data);
-        System.out.println("=".repeat(50));
-        
-        List<String> horarios = gerarHorariosDisponiveis();
-        
-        System.out.println("\n🕐 HORÁRIOS DISPONÍVEIS:");
-        for (int i = 0; i < horarios.size(); i++) {
-            System.out.println((i + 1) + ". " + horarios.get(i));
-        }
-        
-        System.out.println("\n" + "=".repeat(50));
-    }
-    
-    /**
-     * Obtém o nome do profissional baseado no ID
-     * 
-     * @param idProfissional - ID do profissional
-     * @return String - Nome do profissional
-     */
-    private String obterNomeProfissional(String idProfissional) {
-        switch (idProfissional) {
-            case "1": return "Dr. João Silva - Dentista";
-            case "2": return "Dra. Maria Santos - Ortodontista";
-            case "3": return "Dr. Pedro Costa - Endodontista";
-            case "4": return "Dra. Ana Lima - Periodontista";
-            case "5": return "Dr. Carlos Oliveira - Implantodontista";
-            default: return "Profissional não encontrado";
-        }
-    }
-    
-    /**
-     * Gera uma lista de horários disponíveis (simulação)
-     * 
-     * @return List<String> - Lista de horários disponíveis
-     */
-    private List<String> gerarHorariosDisponiveis() {
-        List<String> horarios = new ArrayList<>();
-        
-        // Simulação de horários disponíveis (8h às 17h, intervalos de 1h)
-        LocalTime horaInicio = LocalTime.of(8, 0);
-        LocalTime horaFim = LocalTime.of(17, 0);
-        
-        LocalTime horaAtual = horaInicio;
-        while (horaAtual.isBefore(horaFim)) {
-            // Simula disponibilidade aleatória (70% de chance de estar disponível)
-            if (Math.random() > 0.3) {
-                horarios.add(horaAtual.format(timeFormatter));
-            }
-            horaAtual = horaAtual.plusHours(1);
-        }
-        
-        // Se não houver horários disponíveis, adiciona alguns padrão
-        if (horarios.isEmpty()) {
-            horarios.add("08:00");
-            horarios.add("10:00");
-            horarios.add("14:00");
-            horarios.add("16:00");
-        }
-        
-        return horarios;
-    }
-    
-    /**
-     * Permite ao usuário selecionar um horário específico
-     * 
-     * @param horarios - Lista de horários disponíveis
-     * @return String - Horário selecionado
-     */
-    public String selecionarHorario(List<String> horarios) {
-        if (horarios.isEmpty()) {
-            System.out.println("❌ Não há horários disponíveis para esta data.");
-            return null;
-        }
-        
-        System.out.println("\n🕐 SELECIONAR HORÁRIO:");
-        for (int i = 0; i < horarios.size(); i++) {
-            System.out.println((i + 1) + ". " + horarios.get(i));
-        }
-        
-        int opcao = -1;
-        boolean entradaValida = false;
-        
-        while (!entradaValida) {
-            System.out.print("Digite o número do horário desejado: ");
-            try {
-                opcao = Integer.parseInt(scanner.nextLine().trim());
-                if (opcao >= 1 && opcao <= horarios.size()) {
-                    entradaValida = true;
-                } else {
-                    System.out.println("❌ Opção inválida! Digite um número entre 1 e " + horarios.size());
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("❌ Entrada inválida! Digite um número.");
+
+    private void exibirAgenda(List<Agendamento> agendamentos, Profissional profissional, LocalDate data) {
+        System.out.println("\n=============================================");
+        System.out.println(" Agenda do(a) Prof. " + profissional.getNome());
+        System.out.println(" Data: " + data.format(formatadorData));
+        System.out.println("=============================================");
+
+        if (agendamentos.isEmpty()) {
+            System.out.println("Nenhum horário agendado para este dia.");
+        } else {
+            System.out.println("Horários ocupados:");
+            for (Agendamento ag : agendamentos) {
+                System.out.printf("- %s (Paciente ID: %d)\n",
+                        ag.getHoraAgendamento(),
+                        ag.getIdPaciente()
+                );
             }
         }
-        
-        return horarios.get(opcao - 1);
-    }
-    
-    /**
-     * Exibe uma mensagem de confirmação de agendamento
-     * 
-     * @param profissional - Nome do profissional
-     * @param data - Data do agendamento
-     * @param horario - Horário do agendamento
-     */
-    public void exibirConfirmacaoAgendamento(String profissional, String data, String horario) {
-        System.out.println("\n" + "=".repeat(50));
-        System.out.println("        CONFIRMAÇÃO DE AGENDAMENTO");
-        System.out.println("=".repeat(50));
-        System.out.println("Profissional: " + profissional);
-        System.out.println("Data: " + data);
-        System.out.println("Horário: " + horario);
-        System.out.println("=".repeat(50));
-        System.out.println("✅ Agendamento realizado com sucesso!");
-    }
-    
-    /**
-     * Fecha o scanner para liberar recursos
-     */
-    public void fechar() {
-        if (scanner != null) {
-            scanner.close();
-        }
+        System.out.println("=============================================");
+        System.out.println("Pressione ENTER para voltar ao menu...");
+        scanner.nextLine();
     }
 }

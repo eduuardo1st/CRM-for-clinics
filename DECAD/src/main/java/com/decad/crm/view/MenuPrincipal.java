@@ -6,11 +6,11 @@ import java.util.Scanner;
 public class MenuPrincipal {
     private Scanner scanner = new Scanner(System.in);
 
-    MenuPrincipal(Scanner scanner) {
+    public MenuPrincipal() {
         this.scanner = scanner;
     }
 
-    public int MostrarMenuPrincipal() {
+    public int mostrarMenuPrincipal() {
         int escolha = -1;
 
         while (true) {

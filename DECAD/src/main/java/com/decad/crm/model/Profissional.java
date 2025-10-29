@@ -28,6 +28,12 @@ public class Profissional extends Pessoa {
     public long getId() { return idProfissional; }
 
     public String getCro_crm() { return cro_crm; }
+    public void setCro_crm(String cro_crm) {
+        this.cro_crm = cro_crm;
+    }
 
     public String getEspecialidade() { return especialidade; }
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
+    }
 }
