@@ -87,4 +87,34 @@ public class AgendamentoDAO {
         agendamento.setIdProfissional(rs.getLong("IdProfissional"));
         return agendamento;
     }
+
+    // Método para obter horários disponíveis para um profissional em uma data específica
+    public List<String> getHorariosDisponiveis(int idProfissional, LocalDate data) {
+        List<String> horariosDisponiveis = new ArrayList<>();
+        List<String> horariosOcupados = new ArrayList<>();
+
+        // Horários de trabalho fixos (exemplo: 9h às 17h, intervalos de 1 hora)
+        for (int hora = 9; hora < 17; hora++) {
+            horariosDisponiveis.add(String.format("%02d:00", hora));
+        }
+
+        // Query para buscar agendamentos ocupados
+        String sql = "SELECT hora FROM agendamento WHERE id_profissional = ? AND data = ?";
+        try (Connection conexao = ConectorBancoDeDados.conectar();
+            PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, idProfissional);
+            stmt.setDate(2, Date.valueOf(data));
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                horariosOcupados.add(rs.getString("hora"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        // Remover horários ocupados
+        horariosDisponiveis.removeAll(horariosOcupados);
+        return horariosDisponiveis;
+    }
 }
