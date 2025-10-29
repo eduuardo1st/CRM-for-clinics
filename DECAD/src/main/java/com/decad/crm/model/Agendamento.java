@@ -1,31 +1,63 @@
 package com.decad.crm.model;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Agendamento {
-    protected long idAgendamento;
-    protected String statusAgendamento;
-    protected Time horaAgendamento;
-    protected Date dataAgendamento;
-    protected long idAgenda;
-    protected long idPaciente;
-    protected long idRecepcionista;
+    private long idAgendamento;
+    private LocalDate dataAgendamento;
+    private LocalTime horaAgendamento;
+    private long idPaciente;
+    private long idProfissional;
 
-    public Agendamento(long idAgendamento,String statusAgendamento, Time horaAgendamento, Date dataAgendamento, long idAgenda, long idPaciente, long idRecepcionista) {
-        this.idAgendamento = idAgendamento;
-        this.statusAgendamento = statusAgendamento;
-        this.horaAgendamento = horaAgendamento;
+    public Agendamento () {}
+
+    public Agendamento(LocalDate dataAgendamento, LocalTime horaAgendamento, long idPaciente, long idProfissional) {
         this.dataAgendamento = dataAgendamento;
+        this.horaAgendamento = horaAgendamento;
         this.idPaciente = idPaciente;
-        this.idRecepcionista = idRecepcionista;
+        this.idProfissional = idProfissional;
     }
 
-    public void setIdAgendamento(long idAgendamento) {this.idAgendamento = idAgendamento;}
-    public String getStatusAgendamento() {return statusAgendamento;}
-    public Time getHoraAgendamento() {return horaAgendamento;}
-    public Date getDataAgendamento() {return dataAgendamento;}
-    public long getIdAgenda() {return idAgenda;}
-    public long getIdPaciente() {return idPaciente;}
-    public long getIdRecepcionista() {return idRecepcionista;}
+    public long getIdAgendamento() {
+        return idAgendamento;
+    }
+
+    public void setIdAgendamento(long idAgendamento) {
+        this.idAgendamento = idAgendamento;
+    }
+
+    public LocalDate getDataAgendamento() {
+        return dataAgendamento;
+    }
+
+    public void setDataAgendamento(LocalDate dataAgendamento) {
+        this.dataAgendamento = dataAgendamento;
+    }
+
+    public LocalTime getHoraAgendamento() {
+        return horaAgendamento;
+    }
+
+    public void setHoraAgendamento(LocalTime horaAgendamento) {
+        this.horaAgendamento = horaAgendamento;
+    }
+
+    public long getIdPaciente() {
+        return idPaciente;
+    }
+
+    public void setIdPaciente(long idPaciente) {
+        this.idPaciente = idPaciente;
+    }
+
+    public long getIdProfissional() {
+        return idProfissional;
+    }
+
+    public void setIdProfissional(long idProfissional) {
+        this.idProfissional = idProfissional;
+    }
 
 }

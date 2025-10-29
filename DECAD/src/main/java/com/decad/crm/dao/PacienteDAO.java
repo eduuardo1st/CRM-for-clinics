@@ -62,7 +62,7 @@ public class PacienteDAO {
         return Optional.empty();
     }
 
-    public List<Paciente> ListarPacientes() {
+    public List<Paciente> listarPacientes() {
         String sql = "SELECT IdPaciente, nomeCompleto, email, cpf, telefone FROM Paciente";
         List<Paciente> pacientes = new ArrayList<>();
 
