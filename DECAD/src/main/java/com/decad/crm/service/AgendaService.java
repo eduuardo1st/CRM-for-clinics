@@ -36,7 +36,7 @@ public class AgendaService {
 
             Map<LocalTime, Agendamento> horariosOcupados = agendamentosDoDia.stream()
                     .collect(Collectors.toMap(
-                            ag -> ag.getHoraAgendamento().toLocalTime(),
+                            ag -> ag.getHoraAgendamento().LocalTime(),
                             ag -> ag
                     ));
 
