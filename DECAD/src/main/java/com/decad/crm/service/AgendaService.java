@@ -4,7 +4,7 @@ import com.decad.crm.dao.AgendamentoDAO;
 import com.decad.crm.model.Agendamento;
 import com.decad.crm.dao.PacienteDAO;
 import com.decad.crm.model.Paciente;
-
+import java.sql.Time;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -32,11 +32,11 @@ public class AgendaService {
         Date sqlDate = Date.valueOf(data);
         List<String> agenda = new ArrayList<>();
         try {
-            List<Agendamento> agendamentosDoDia = agendamentoDAO.buscarPorProfissionalEData(profissionalId, sqlDate);
+            List<Agendamento> agendamentosDoDia = agendamentoDAO.buscarPorProfissionalEData(profissionalId, sqlDate.toLocalDate());
 
             Map<LocalTime, Agendamento> horariosOcupados = agendamentosDoDia.stream()
                     .collect(Collectors.toMap(
-                            ag -> ag.getHoraAgendamento().LocalTime(),
+                            Agendamento::getHoraAgendamento,
                             ag -> ag
                     ));
 
