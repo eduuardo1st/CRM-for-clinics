@@ -1,6 +1,6 @@
-package com.decad.crm.dao.implement; // <-- MUDOU O PACOTE
+package com.decad.crm.dao.implement;
 
-import com.decad.crm.dao.IProfissionalDAO; // <-- IMPORTA A INTERFACE
+import com.decad.crm.dao.IProfissionalDAO;
 import com.decad.crm.model.Profissional;
 import com.decad.crm.util.ConectorBancoDeDados;
 
@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-// "implements IProfissionalDAO" é a parte mais importante aqui
 public class ProfissionalDAO implements IProfissionalDAO {
 
     private final String SQL_todos_campos = "SELECT IdProfissional, nomeCompleto, email, cpf, telefone, cro_crm, especialidade FROM Profissional";
@@ -155,7 +154,7 @@ public class ProfissionalDAO implements IProfissionalDAO {
         return profissionais;
     }
 
-    private Profissional passarDadosProfissionalRS(ResultSet rs) throws SQLException {
+    public Profissional passarDadosProfissionalRS(ResultSet rs) throws SQLException {
         Profissional profissional = new Profissional(
                 rs.getString("nomeCompleto"),
                 rs.getString("email"),

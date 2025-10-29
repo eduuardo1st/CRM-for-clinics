@@ -1,5 +1,6 @@
-package com.decad.crm.dao;
+package com.decad.crm.dao.implement;
 
+import com.decad.crm.dao.IPacienteDAO;
 import com.decad.crm.model.Paciente;
 import com.decad.crm.util.ConectorBancoDeDados;
 
@@ -8,11 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PacienteDAO {
+public class PacienteDAO implements IPacienteDAO{
     // Usei ResultSet para pegar os dados das consultas SQL que realizei, então sempre que ver ResultSet no
     // código quer dizer que estou pegando os dados da consulta SQL
 
-    public void salvarPaciente(Paciente paciente) {
+    private final String SQL_todos_campos = "SELECT IdPaciente, nomeCompleto, email, cpf, telefone FROM Paciente WHERE IdPaciente = ?";
+
+    @Override
+    public void salvar(Paciente paciente) {
         String sql = "INSERT INTO Paciente (nomeCompleto, email, cpf, telefone) VALUES (?, ?, ?, ?)";
 
         try (Connection conexao = ConectorBancoDeDados.conectar();
@@ -40,46 +44,8 @@ public class PacienteDAO {
         }
     }
 
-    public Optional<Paciente> buscarPacientePorId(long id) {
-        String sql = "SELECT IdPaciente, nomeCompleto, email, cpf, telefone FROM Paciente WHERE IdPaciente = ?";
-
-        try (Connection conexao = ConectorBancoDeDados.conectar();
-             PreparedStatement statement = conexao.prepareStatement(sql)) {
-
-            statement.setLong(1, id);
-
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    return Optional.of(passarDadosPacienteRS(resultSet));
-                }
-            }
-
-
-        } catch (SQLException e) {
-            System.out.println("Erro ao buscar Paciente: " + e.getMessage());
-            throw new RuntimeException("Erro ao buscar Paciente: " + e);
-        }
-        return Optional.empty();
-    }
-
-    public List<Paciente> listarPacientes() {
-        String sql = "SELECT IdPaciente, nomeCompleto, email, cpf, telefone FROM Paciente";
-        List<Paciente> pacientes = new ArrayList<>();
-
-        try (Connection conexao = ConectorBancoDeDados.conectar();
-             PreparedStatement statement = conexao.prepareStatement(sql);
-             ResultSet resultset = statement.executeQuery()) {
-            while (resultset.next()) {
-                pacientes.add(passarDadosPacienteRS(resultset));
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro ao listar Pacientes: " + e.getMessage());
-            throw new RuntimeException("Erro ao listar Pacientes: " + e);
-        }
-        return pacientes;
-    }
-
-    public void atualizarPaciente(Paciente paciente) {
+    @Override
+    public void atualizar(Paciente paciente) {
         String sql = "UPDATE Paciente SET nomeCompleto = ?, email = ?, cpf = ?, telefone = ? WHERE IdPaciente = ?";
 
         try (Connection conexao = ConectorBancoDeDados.conectar();
@@ -104,7 +70,8 @@ public class PacienteDAO {
         }
     }
 
-    public void deletarPaciente(long id) {
+    @Override
+    public void deletar(long id) {
         String sql = "DELETE FROM Paciente WHERE IdPaciente = ?";
 
         try (Connection conexao = ConectorBancoDeDados.conectar();
@@ -124,6 +91,46 @@ public class PacienteDAO {
         }
     }
 
+    @Override
+    public Optional<Paciente> buscarPorId(long id) {
+        String sql = SQL_todos_campos + " WHERE IdPaciente = ?";
+
+        try (Connection conexao = ConectorBancoDeDados.conectar();
+             PreparedStatement statement = conexao.prepareStatement(sql)) {
+
+            statement.setLong(1, id);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return Optional.of(passarDadosPacienteRS(resultSet));
+                }
+            }
+
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar Paciente: " + e.getMessage());
+            throw new RuntimeException("Erro ao buscar Paciente: " + e);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public List<Paciente> listarTodos() {
+        List<Paciente> pacientes = new ArrayList<>();
+
+        try (Connection conexao = ConectorBancoDeDados.conectar();
+             PreparedStatement statement = conexao.prepareStatement(SQL_todos_campos);
+             ResultSet resultset = statement.executeQuery()) {
+            while (resultset.next()) {
+                pacientes.add(passarDadosPacienteRS(resultset));
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao listar Pacientes: " + e.getMessage());
+            throw new RuntimeException("Erro ao listar Pacientes: " + e);
+        }
+        return pacientes;
+    }
+
     private Paciente passarDadosPacienteRS(ResultSet rs) throws SQLException {
         Paciente paciente = new Paciente(
                 rs.getString("nomeCompleto"),
@@ -134,6 +141,4 @@ public class PacienteDAO {
         paciente.setIdPaciente(rs.getLong("IdPaciente"));
         return paciente;
     }
-
-
 }
