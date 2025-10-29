@@ -2,25 +2,29 @@ package com.decad.crm.service;
 
 import com.decad.crm.dao.UsuarioDAO;
 import com.decad.crm.model.Usuario;
-import java.sql.SQLException;
 
-
-// verifica se o login e senha estão corretos
 public class AutenticacaoService {
 
-    private UsuarioDAO usuarioDAO = new UsuarioDAO();
+    private final UsuarioDAO usuarioDAO;
+
+    public AutenticacaoService() {
+        this.usuarioDAO = new UsuarioDAO();
+    }
 
     public boolean login(String login, String senha) {
         try {
             Usuario usuario = usuarioDAO.buscarPorLogin(login);
+
             if (usuario != null && usuario.getSenha().equals(senha)) {
+                System.out.println("Login bem-sucedido para o usuário: " + login);
                 return true;
+            } else {
+                System.out.println("Falha no login: Credenciais inválidas para o usuário: " + login);
+                return false;
             }
-        } catch (SQLException e) {
-            System.err.println("Erro ao autenticar usuário: " + e.getMessage());
-            throw new RuntimeException("Erro ao autenticar usuário.", e);
+        } catch (Exception e) {
+            System.err.println("Erro durante o processo de login: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 }
-
