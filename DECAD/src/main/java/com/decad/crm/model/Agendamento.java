@@ -1,15 +1,13 @@
 package com.decad.crm.model;
-import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Agendamento {
-    private long idAgendamento;
-    private LocalDate dataAgendamento;
-    private LocalTime horaAgendamento;
-    private long idPaciente;
-    private long idProfissional;
+    protected LocalDate dataAgendamento;
+    protected LocalTime horaAgendamento;
+    protected long idPaciente;
+    protected long idProfissional;
+    protected long idAgendamento;
 
     public Agendamento () {}
 

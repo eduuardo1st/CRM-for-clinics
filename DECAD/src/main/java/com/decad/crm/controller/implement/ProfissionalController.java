@@ -17,7 +17,7 @@ public class ProfissionalController implements IProfissionalController {
     }
 
     @Override
-    public void salvar(Profissional profissional) {
+    public void salvarComValidacao(Profissional profissional) {
         if(profissional.getCpf() == null || profissional.getCpf().isEmpty()) {
 
             throw new RuntimeException("CPF obrigatório!");

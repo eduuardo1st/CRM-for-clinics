@@ -16,7 +16,7 @@ public class PacienteController implements IPacienteController {
     }
 
     @Override
-    public void salvar(Paciente paciente) {
+    public void salvarComValidacao(Paciente paciente) {
 
         if(paciente.getCpf() == null || paciente.getCpf().isEmpty()) {
 

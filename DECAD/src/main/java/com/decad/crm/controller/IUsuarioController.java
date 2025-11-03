@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface IUsuarioController {
 
-    void criar(Usuario usuario) throws SQLException;
+    void criarComValidacao(Usuario usuario) throws SQLException;
 
     Optional<Usuario> buscarPorId(int idUsuario) throws SQLException;
 

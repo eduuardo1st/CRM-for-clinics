@@ -14,7 +14,8 @@ public class UsuarioController implements IUsuarioController{
         this.usuarioDAO = UsuarioDAO;
     }
 
-    public void criar(Usuario usuario) throws SQLException {
+    @Override
+    public void criarComValidacao(Usuario usuario) throws SQLException {
         if(usuario.getLogin() == null || usuario.getLogin().isEmpty()){
 
             throw new RuntimeException("Login obrigatório!");
@@ -33,10 +34,12 @@ public class UsuarioController implements IUsuarioController{
         usuarioDAO.criar(usuario);
     }
 
+    @Override
     public Optional<Usuario> buscarPorId(int idUsuario) throws SQLException{
         return usuarioDAO.buscarPorId(idUsuario);
     }
 
+    @Override
     public Optional<Usuario> buscarPorLogin(String login) throws SQLException{
         return usuarioDAO.buscarPorLogin(login);
     }
