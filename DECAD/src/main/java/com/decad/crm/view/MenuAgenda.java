@@ -1,7 +1,8 @@
+/*
 package com.decad.crm.view;
 
 import com.decad.crm.dao.AgendamentoDAO;
-import com.decad.crm.dao.ProfissionalDAO;
+import com.decad.crm.dao.implement.ProfissionalDAO;
 import com.decad.crm.model.Agendamento;
 import com.decad.crm.model.Profissional;
 
@@ -52,7 +53,7 @@ public class MenuAgenda {
     private Optional<Profissional> selecionarProfissional() {
         List<Profissional> profissionais;
         try {
-            profissionais = profissionalDAO.ListarProfissional();
+            profissionais = profissionalDAO.listarTodos();
         } catch (Exception e) {
             System.err.println("Erro ao listar profissionais: " + e.getMessage());
             return Optional.empty();
@@ -126,4 +127,4 @@ public class MenuAgenda {
         System.out.println("Pressione ENTER para voltar ao menu...");
         scanner.nextLine();
     }
-}
+}*/

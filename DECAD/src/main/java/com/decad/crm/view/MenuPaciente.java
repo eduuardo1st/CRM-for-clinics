@@ -1,6 +1,6 @@
+/*
 package com.decad.crm.view;
 
-import com.decad.crm.dao.PacienteDAO;
 import com.decad.crm.model.Paciente;
 
 import java.util.List;
@@ -149,4 +149,4 @@ public class MenuPaciente extends MenuCrudBase {
         }
         pausar();
     }
-}
+}*/

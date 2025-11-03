@@ -39,8 +39,8 @@ public class ProfissionalDAO implements IProfissionalDAO {
             }
 
         } catch (SQLException e) {
-            System.err.println("Erro ao salvar Profissional: " + e.getMessage());
-            throw new RuntimeException("Erro ao salvar Profissional: " + e);
+            System.err.println("Erro ao salvar profissional: " + e.getMessage());
+            throw new RuntimeException("Erro ao salvar profissional: " + e);
         }
     }
 

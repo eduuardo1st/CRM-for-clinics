@@ -1,10 +1,10 @@
-package com.decad.crm.service;
+package com.decad.crm.controller;
 
 import com.decad.crm.model.Profissional;
 import java.util.List;
 import java.util.Optional;
 
-public interface IProfissionalService {
+public interface IProfissionalController {
 
     void salvar(Profissional profissional);
 

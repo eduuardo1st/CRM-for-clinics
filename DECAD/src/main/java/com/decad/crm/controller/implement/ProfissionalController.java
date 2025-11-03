@@ -1,18 +1,18 @@
-package com.decad.crm.service.implement;
+package com.decad.crm.controller.implement;
 
 import com.decad.crm.dao.IProfissionalDAO;
 import com.decad.crm.model.Profissional;
-import com.decad.crm.service.IProfissionalService;
+import com.decad.crm.controller.IProfissionalController;
 
 import java.util.List;
 import java.util.Optional;
 
 // Camada para inserir a lógica geral de cada método implementado, autenticação, validação, etc...
 
-public class ProfissionalService implements IProfissionalService {
+public class ProfissionalController implements IProfissionalController {
     private final IProfissionalDAO profissionalDAO;
 
-    public ProfissionalService(IProfissionalDAO profissionalDAO) {
+    public ProfissionalController(IProfissionalDAO profissionalDAO) {
         this.profissionalDAO = profissionalDAO;
     }
 
@@ -20,7 +20,7 @@ public class ProfissionalService implements IProfissionalService {
     public void salvar(Profissional profissional) {
         if(profissional.getCpf() == null || profissional.getCpf().isEmpty()) {
 
-            throw new RuntimeException("CPF é obrigatório!");
+            throw new RuntimeException("CPF obrigatório!");
         }
 
         if(profissionalDAO.buscarPorCPF(profissional.getCpf()).isPresent()) {

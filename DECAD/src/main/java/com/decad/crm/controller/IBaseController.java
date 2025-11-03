@@ -1,9 +1,11 @@
-package com.decad.crm.service;
+package com.decad.crm.controller;
+
+import com.decad.crm.model.Paciente;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface IBaseService<Tipo> {
+public interface IBaseController<Tipo> {
 
     void salvar(Tipo objeto);
 
@@ -12,6 +14,8 @@ public interface IBaseService<Tipo> {
     void deletar(long id);
 
     Optional<Tipo> buscarPorId(long id);
+
+    Optional<Paciente> buscarPorCPF(String cpf);
 
     List<Tipo> listarTodos();
 }

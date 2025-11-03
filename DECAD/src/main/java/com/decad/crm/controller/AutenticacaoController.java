@@ -1,13 +1,13 @@
-package com.decad.crm.service;
+/*package com.decad.crm.controller;
 
-import com.decad.crm.dao.UsuarioDAO;
+import com.decad.crm.dao.implement.UsuarioDAO;
 import com.decad.crm.model.Usuario;
 
-public class AutenticacaoService {
+public class AutenticacaoController {
 
     private final UsuarioDAO usuarioDAO;
 
-    public AutenticacaoService() {
+    public AutenticacaoController() {
         this.usuarioDAO = new UsuarioDAO();
     }
 
@@ -27,4 +27,4 @@ public class AutenticacaoService {
             return false;
         }
     }
-}
+}*/

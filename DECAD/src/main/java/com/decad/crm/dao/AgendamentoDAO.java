@@ -1,3 +1,4 @@
+/*
 package com.decad.crm.dao;
 
 import com.decad.crm.model.Agendamento;
@@ -117,4 +118,4 @@ public class AgendamentoDAO {
         horariosDisponiveis.removeAll(horariosOcupados);
         return horariosDisponiveis;
     }
-}
+}*/
