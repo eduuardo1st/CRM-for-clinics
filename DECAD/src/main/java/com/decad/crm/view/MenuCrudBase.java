@@ -1,4 +1,4 @@
-/*
+
 package com.decad.crm.view;
 
 import java.util.Optional;
@@ -73,4 +73,4 @@ public abstract class MenuCrudBase {
             return Optional.empty();
         }
     }
-}*/
+}

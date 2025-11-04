@@ -52,7 +52,7 @@ public class ProfissionalDAO implements IProfissionalDAO {
              PreparedStatement statement = conexao.prepareStatement(sql)) {
 
             statement.setString(1, profissional.getNome());
-            statement.setString(2, profissional.getEmail()); // <-- CORRIGIDO
+            statement.setString(2, profissional.getEmail());
             statement.setString(3, profissional.getCpf());
             statement.setString(4, profissional.getCro_crm());
             statement.setString(5, profissional.getEspecialidade());
@@ -154,7 +154,7 @@ public class ProfissionalDAO implements IProfissionalDAO {
         return profissionais;
     }
 
-    public Profissional passarDadosProfissionalRS(ResultSet rs) throws SQLException {
+    private Profissional passarDadosProfissionalRS(ResultSet rs) throws SQLException {
         Profissional profissional = new Profissional(
                 rs.getString("nomeCompleto"),
                 rs.getString("email"),

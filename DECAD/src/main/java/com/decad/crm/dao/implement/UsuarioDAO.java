@@ -81,7 +81,7 @@ public class UsuarioDAO implements IUsuarioDAO{
         return Optional.empty();
     }
 
-    public Usuario passarDadosUsuarioRS(ResultSet rs) throws SQLException {
+    private Usuario passarDadosUsuarioRS(ResultSet rs) throws SQLException {
         Usuario usuario = new Usuario(
                 rs.getString("login"),
                 rs.getString("senha")
