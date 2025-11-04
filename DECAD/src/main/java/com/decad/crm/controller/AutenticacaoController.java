@@ -1,30 +1,35 @@
-/*package com.decad.crm.controller;
+package com.decad.crm.controller;
 
-import com.decad.crm.dao.implement.UsuarioDAO;
+import com.decad.crm.dao.IUsuarioDAO;
 import com.decad.crm.model.Usuario;
+import java.util.Optional;
 
 public class AutenticacaoController {
 
-    private final UsuarioDAO usuarioDAO;
+    private final IUsuarioDAO usuarioDAO;
 
-    public AutenticacaoController() {
-        this.usuarioDAO = new UsuarioDAO();
+    public AutenticacaoController(IUsuarioDAO usuarioDAO) {
+        this.usuarioDAO = usuarioDAO;
     }
 
     public boolean login(String login, String senha) {
         try {
-            Usuario usuario = usuarioDAO.buscarPorLogin(login);
+            Optional<Usuario> usuarioOpt = usuarioDAO.buscarPorLogin(login);
 
-            if (usuario != null && usuario.getSenha().equals(senha)) {
-                System.out.println("Login bem-sucedido para o usuário: " + login);
-                return true;
-            } else {
-                System.out.println("Falha no login: Credenciais inválidas para o usuário: " + login);
-                return false;
+            if (usuarioOpt.isPresent()) {
+                Usuario usuario = usuarioOpt.get();
+                if (usuario.getSenha().equals(senha)) {
+                    System.out.println("Login bem-sucedido para o usuário: " + login);
+                    return true;
+                }
             }
+
+            System.out.println("Falha no login: Credenciais inválidas para o usuário: " + login);
+            return false;
+
         } catch (Exception e) {
             System.err.println("Erro durante o processo de login: " + e.getMessage());
             return false;
         }
     }
-}*/
+}
