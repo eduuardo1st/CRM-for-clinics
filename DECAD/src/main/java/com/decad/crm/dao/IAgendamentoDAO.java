@@ -13,5 +13,5 @@ public interface IAgendamentoDAO {
 
     List<Agendamento> buscarPorProfissionalEData(long idProfissional, LocalDate data);
 
-    List<String> getHorariosDisponiveis(int idProfissional, LocalDate data);
+    List<String> getHorariosOcupados(long idProfissional, LocalDate data);
 }

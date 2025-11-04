@@ -4,9 +4,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MenuPrincipal {
-    private Scanner scanner = new Scanner(System.in);
 
-    public MenuPrincipal() {
+    private Scanner scanner;
+
+    public MenuPrincipal(Scanner scanner) {
         this.scanner = scanner;
     }
 
@@ -19,7 +20,7 @@ public class MenuPrincipal {
             System.out.println("=======================");
             System.out.println("1. Gerenciar Pacientes");
             System.out.println("2. Gerenciar Profissionais");
-            System.out.println("3. Gerenciar Agenda");
+            System.out.println("3. Consultar Agenda");
             System.out.println("0. Sair do Sistema");
             System.out.println("=======================");
             System.out.print("Digite sua opção: ");
@@ -40,10 +41,4 @@ public class MenuPrincipal {
             }
         }
     }
-
-    public void fecharScanner() {
-        System.out.println("Encerrando o sistema de entrada...");
-        this.scanner.close();
-    }
 }
-

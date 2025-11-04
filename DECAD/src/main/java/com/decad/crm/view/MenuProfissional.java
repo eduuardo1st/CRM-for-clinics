@@ -43,12 +43,6 @@ public class MenuProfissional extends MenuCrudBase {
         System.out.print("Especialidade: ");
         String especialidade = scanner.nextLine();
 
-        if (nome.isEmpty() || cpf.isEmpty() || croCrm.isEmpty()) {
-            System.err.println("Erro: Nome, CPF e CRO/CRM são campos obrigatórios.");
-            pausar();
-            return;
-        }
-
         Profissional novoProfissional = new Profissional(nome, email, cpf, telefone, croCrm, especialidade);
 
         try {

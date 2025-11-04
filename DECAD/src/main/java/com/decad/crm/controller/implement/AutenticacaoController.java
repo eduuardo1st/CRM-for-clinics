@@ -1,10 +1,11 @@
-package com.decad.crm.controller;
+package com.decad.crm.controller.implement;
 
+import com.decad.crm.controller.IAutenticacaoController;
 import com.decad.crm.dao.IUsuarioDAO;
 import com.decad.crm.model.Usuario;
 import java.util.Optional;
 
-public class AutenticacaoController {
+public class AutenticacaoController implements IAutenticacaoController {
 
     private final IUsuarioDAO usuarioDAO;
 
@@ -12,12 +13,14 @@ public class AutenticacaoController {
         this.usuarioDAO = usuarioDAO;
     }
 
+    @Override
     public boolean login(String login, String senha) {
         try {
             Optional<Usuario> usuarioOpt = usuarioDAO.buscarPorLogin(login);
 
             if (usuarioOpt.isPresent()) {
                 Usuario usuario = usuarioOpt.get();
+
                 if (usuario.getSenha().equals(senha)) {
                     System.out.println("Login bem-sucedido para o usuário: " + login);
                     return true;

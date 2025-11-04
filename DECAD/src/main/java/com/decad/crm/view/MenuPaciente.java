@@ -39,12 +39,6 @@ public class MenuPaciente extends MenuCrudBase {
         System.out.print("Telefone: ");
         String telefone = scanner.nextLine();
 
-        if (nome.isEmpty() || cpf.isEmpty()) {
-            System.err.println("Erro: Nome e CPF são campos obrigatórios.");
-            pausar();
-            return;
-        }
-
         Paciente novoPaciente = new Paciente(nome, email, cpf, telefone);
 
         try {

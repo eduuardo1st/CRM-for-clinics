@@ -23,6 +23,16 @@ public class ProfissionalController implements IProfissionalController {
             throw new RuntimeException("CPF obrigatório!");
         }
 
+        if(profissional.getCro_crm() == null || profissional.getCro_crm().isEmpty()) {
+
+            throw new RuntimeException("CRO/CRM obrigatório!");
+        }
+
+        if(profissional.getNome() == null || profissional.getNome().isEmpty()) {
+
+            throw new RuntimeException("Nome do profissional obrigatório!");
+        }
+
         if(profissionalDAO.buscarPorCPF(profissional.getCpf()).isPresent()) {
 
             throw new RuntimeException("Profissional já cadastrado!");
