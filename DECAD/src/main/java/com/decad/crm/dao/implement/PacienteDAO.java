@@ -2,6 +2,7 @@ package com.decad.crm.dao.implement;
 
 import com.decad.crm.dao.IPacienteDAO;
 import com.decad.crm.model.Paciente;
+import com.decad.crm.model.Profissional;
 import com.decad.crm.util.ConectorBancoDeDados;
 
 import java.sql.*;
@@ -110,6 +111,28 @@ public class PacienteDAO implements IPacienteDAO{
         } catch (SQLException e) {
             System.out.println("Erro ao buscar Paciente: " + e.getMessage());
             throw new RuntimeException("Erro ao buscar Paciente: " + e);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Paciente> buscarPorCPF(String CPF) {
+        String sql = SQL_todos_campos + " WHERE CPF = ?";
+
+        try (Connection conexao = ConectorBancoDeDados.conectar();
+             PreparedStatement statement = conexao.prepareStatement(sql)) {
+
+            statement.setString(1, CPF);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return Optional.of(passarDadosPacienteRS(resultSet));
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar paciente: " + e.getMessage());
+            throw new RuntimeException("Erro ao buscar paciente: " + e);
         }
         return Optional.empty();
     }

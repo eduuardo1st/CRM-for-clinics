@@ -1,12 +1,16 @@
 package com.decad.crm.view;
 
-import com.decad.crm.dao.AgendamentoDAO;
-import com.decad.crm.dao.ProfissionalDAO;
+import com.decad.crm.controller.IAgendamentoController;
+import com.decad.crm.controller.IProfissionalController;
+import com.decad.crm.controller.implement.AgendamentoController;
+import com.decad.crm.controller.implement.ProfissionalController;
+import com.decad.crm.dao.IAgendamentoDAO;
+import com.decad.crm.dao.IProfissionalDAO;
+import com.decad.crm.dao.implement.AgendamentoDAO;
+import com.decad.crm.dao.implement.ProfissionalDAO;
 import com.decad.crm.model.Agendamento;
 import com.decad.crm.model.Profissional;
 
-import java.sql.Date;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -17,14 +21,18 @@ import java.util.Scanner;
 public class MenuAgenda {
 
     private Scanner scanner;
-    private ProfissionalDAO profissionalDAO;
-    private AgendamentoDAO agendamentoDAO;
+    private IAgendamentoController agendamentoController;
+    private IProfissionalController profissionalController;
     private DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public MenuAgenda(Scanner scanner) {
         this.scanner = scanner;
-        this.profissionalDAO = new ProfissionalDAO();
-        this.agendamentoDAO = new AgendamentoDAO();
+
+        IProfissionalDAO profissionalDAO = new ProfissionalDAO();
+        this.profissionalController = new ProfissionalController(profissionalDAO);
+
+        IAgendamentoDAO agendamentoDAO = new AgendamentoDAO();
+        this.agendamentoController = new AgendamentoController(agendamentoDAO);
     }
 
     public void mostrarConsultarAgenda() {
@@ -40,8 +48,7 @@ public class MenuAgenda {
         LocalDate dataLocal = selecionarData();
 
         try {
-            List<Agendamento> agendamentos = agendamentoDAO.buscarPorProfissionalEData(profissional.getId(), dataLocal);
-
+            List<Agendamento> agendamentos = agendamentoController.buscarPorProfissionalEData(profissional.getId(), dataLocal);
             exibirAgenda(agendamentos, profissional, dataLocal);
 
         } catch (RuntimeException e) {
@@ -52,7 +59,7 @@ public class MenuAgenda {
     private Optional<Profissional> selecionarProfissional() {
         List<Profissional> profissionais;
         try {
-            profissionais = profissionalDAO.ListarProfissional();
+            profissionais = profissionalController.listarTodos();
         } catch (Exception e) {
             System.err.println("Erro ao listar profissionais: " + e.getMessage());
             return Optional.empty();

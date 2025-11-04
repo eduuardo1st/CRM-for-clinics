@@ -1,6 +1,9 @@
 package com.decad.crm.view;
 
-import com.decad.crm.dao.PacienteDAO;
+import com.decad.crm.controller.IPacienteController;
+import com.decad.crm.controller.implement.PacienteController;
+import com.decad.crm.dao.IPacienteDAO;
+import com.decad.crm.dao.implement.PacienteDAO;
 import com.decad.crm.model.Paciente;
 
 import java.util.List;
@@ -9,11 +12,13 @@ import java.util.Scanner;
 
 public class MenuPaciente extends MenuCrudBase {
 
-    private PacienteDAO pacienteDAO;
+    private IPacienteController pacienteController;
 
     public MenuPaciente(Scanner scanner) {
         super(scanner);
-        this.pacienteDAO = new PacienteDAO();
+
+        IPacienteDAO dao = new PacienteDAO();
+        this.pacienteController = new PacienteController(dao);
     }
 
     @Override
@@ -43,7 +48,7 @@ public class MenuPaciente extends MenuCrudBase {
         Paciente novoPaciente = new Paciente(nome, email, cpf, telefone);
 
         try {
-            pacienteDAO.salvarPaciente(novoPaciente);
+            pacienteController.salvarComValidacao(novoPaciente);
             System.out.println("Paciente cadastrado com sucesso! (ID: " + novoPaciente.getId() + ")");
         } catch (RuntimeException e) {
             System.err.println("Erro ao salvar paciente: " + e.getMessage());
@@ -57,7 +62,7 @@ public class MenuPaciente extends MenuCrudBase {
 
         List<Paciente> pacientes;
         try {
-            pacientes = pacienteDAO.listarPacientes();
+            pacientes = pacienteController.listarTodos();
         } catch (RuntimeException e) {
             System.err.println("Erro ao listar pacientes: " + e.getMessage());
             pausar();
@@ -94,7 +99,7 @@ public class MenuPaciente extends MenuCrudBase {
         Optional<Long> idOpt = pedirId("Digite o ID do paciente que deseja atualizar: ");
         if (idOpt.isEmpty()) return;
 
-        Optional<Paciente> pacienteOpt = pacienteDAO.buscarPacientePorId(idOpt.get());
+        Optional<Paciente> pacienteOpt = pacienteController.buscarPorId(idOpt.get());
         if (pacienteOpt.isEmpty()) {
             System.err.println("Paciente com ID " + idOpt.get() + " não encontrado.");
             pausar();
@@ -121,7 +126,7 @@ public class MenuPaciente extends MenuCrudBase {
         if (!telefone.isEmpty()) paciente.setTelefone(telefone);
 
         try {
-            pacienteDAO.atualizarPaciente(paciente);
+            pacienteController.atualizar(paciente);
         } catch (RuntimeException e) {
             System.err.println("Erro ao atualizar paciente: " + e.getMessage());
         }
@@ -140,7 +145,7 @@ public class MenuPaciente extends MenuCrudBase {
 
         if (confirmacao.equalsIgnoreCase("S")) {
             try {
-                pacienteDAO.deletarPaciente(idOpt.get());
+                pacienteController.deletar(idOpt.get());
             } catch (RuntimeException e) {
                 System.err.println("Erro ao deletar paciente: " + e.getMessage());
             }

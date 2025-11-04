@@ -1,0 +1,53 @@
+
+# ===============================================================
+# =============== ARQUIVOS DE CONFIGURAÇÃO SENSÍVEIS ============
+# ===============================================================
+# Ignorar o arquivo de ambiente com as credenciais do banco de dados
+DECAD/.env
+
+
+# ===============================================================
+# =============== ARQUIVOS GERADOS PELO MAVEN ===================
+# ===============================================================
+# Pasta de saída do build com o código compilado e o .jar
+DECAD/target/
+
+# Arquivos de log de builds do Maven
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+
+# ===============================================================
+# =============== ARQUIVOS GERADOS PELO INTELLIJ IDEA ===========
+# ===============================================================
+# Pasta com configurações do projeto específicas do usuário
+DECAD/idea/
+
+# Arquivos de módulo do projeto
+*.iml
+*.iws
+
+# Pasta de saída de compilação do IntelliJ
+out/
+
+
+# ===============================================================
+# =============== ARQUIVOS DE SISTEMA OPERACIONAL ===============
+# ===============================================================
+# Arquivos de cache e metadados do macOS, Windows e Linux
+.DS_Store
+Thumbs.db
+*~
+ehthumbs.db
+
+
+# ===============================================================
+# =============== ARQUIVOS DE LOG E TEMPORÁRIOS =================
+# ===============================================================
+# Arquivos de log gerados pela aplicação ou por dependências
+*.log
+logs/

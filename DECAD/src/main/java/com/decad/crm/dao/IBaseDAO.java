@@ -1,7 +1,5 @@
 package com.decad.crm.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +13,8 @@ public interface IBaseDAO<Tipo> {
     void deletar(long id);
 
     Optional<Tipo> buscarPorId(long id);
+
+    Optional<Tipo> buscarPorCPF(String CPF);
 
     List<Tipo> listarTodos();
 }

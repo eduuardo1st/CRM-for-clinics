@@ -1,13 +1,13 @@
 package com.decad.crm.model;
 
 public class Usuario {
-    private long idUsuario;
-    private String login;
-    private String senha;
+    protected long idUsuario;
+    protected String login;
+    protected String senha;
 
     public Usuario() {}
 
-    public Usuario(long idUsuario, String login, String senha) {this.login = login;this.senha = senha;}
+    public Usuario(String login, String senha) {this.login = login;this.senha = senha;}
 
     public long getIdUsuario() {return idUsuario;}
 

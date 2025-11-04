@@ -1,14 +1,13 @@
 package com.decad.crm;
 
-import com.decad.crm.util.ConectorBancoDeDados;
 import com.decad.crm.view.MenuPrincipal;
-import com.decad.crm.service.AutenticacaoService;
-import com.decad.crm.view.MenuAgenda;
+import com.decad.crm.controller.AutenticacaoController;
+
 import java.util.Scanner;
 
 public class CrmApp {
     public static void main(String[] args) {
-        AutenticacaoService autenticacaoService = new AutenticacaoService();
+        AutenticacaoController autenticacaoController = new AutenticacaoController();
         Scanner scanner = new Scanner(System.in);
 
         boolean logado = false;
@@ -18,7 +17,7 @@ public class CrmApp {
             System.out.print("Digite a senha: ");
             String senha = scanner.nextLine();
 
-            if (autenticacaoService.login(login, senha)) {
+            if (autenticacaoController.login(login, senha)) {
                 System.out.println("Login bem-sucedido!");
                 logado = true;
             } else {

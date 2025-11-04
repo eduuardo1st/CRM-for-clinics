@@ -1,6 +1,9 @@
 package com.decad.crm.view;
 
-import com.decad.crm.dao.ProfissionalDAO;
+import com.decad.crm.controller.IProfissionalController;
+import com.decad.crm.controller.implement.ProfissionalController;
+import com.decad.crm.dao.IProfissionalDAO;
+import com.decad.crm.dao.implement.ProfissionalDAO;
 import com.decad.crm.model.Profissional;
 
 import java.util.List;
@@ -9,11 +12,13 @@ import java.util.Scanner;
 
 public class MenuProfissional extends MenuCrudBase {
 
-    private ProfissionalDAO profissionalDAO;
+    private IProfissionalController profissionalController;
 
     public MenuProfissional(Scanner scanner) {
         super(scanner);
-        this.profissionalDAO = new ProfissionalDAO();
+
+        IProfissionalDAO dao = new ProfissionalDAO();
+        this.profissionalController = new ProfissionalController(dao);
     }
 
     @Override
@@ -47,7 +52,7 @@ public class MenuProfissional extends MenuCrudBase {
         Profissional novoProfissional = new Profissional(nome, email, cpf, telefone, croCrm, especialidade);
 
         try {
-            profissionalDAO.salvarProfissionalEspecialidade(novoProfissional);
+            profissionalController.salvarComValidacao(novoProfissional);
             System.out.println("Profissional cadastrado com sucesso! (ID: " + novoProfissional.getId() + ")");
         } catch (RuntimeException e) {
             System.err.println("Erro ao salvar profissional: " + e.getMessage());
@@ -61,7 +66,7 @@ public class MenuProfissional extends MenuCrudBase {
 
         List<Profissional> profissionais;
         try {
-            profissionais = profissionalDAO.listarProfissional();
+            profissionais = profissionalController.listarTodos();
         } catch (RuntimeException e) {
             System.err.println("Erro ao listar profissionais: " + e.getMessage());
             pausar();
@@ -100,7 +105,8 @@ public class MenuProfissional extends MenuCrudBase {
         Optional<Long> idOpt = pedirId("Digite o ID do profissional que deseja atualizar: ");
         if (idOpt.isEmpty()) return;
 
-        Optional<Profissional> profOpt = profissionalDAO.buscarProfissionalPorId(idOpt.get());
+        Optional<Profissional> profOpt = profissionalController.buscarPorId(idOpt.get());
+
         if (profOpt.isEmpty()) {
             System.err.println("Profissional com ID " + idOpt.get() + " não encontrado.");
             pausar();
@@ -135,7 +141,7 @@ public class MenuProfissional extends MenuCrudBase {
         if (!especialidade.isEmpty()) profissional.setEspecialidade(especialidade);
 
         try {
-            profissionalDAO.atualizarProfissional(profissional);
+            profissionalController.atualizar(profissional);
             System.out.println("Profissional atualizado com sucesso!");
         } catch (RuntimeException e) {
             System.err.println("Erro ao atualizar profissional: " + e.getMessage());
@@ -155,7 +161,7 @@ public class MenuProfissional extends MenuCrudBase {
 
         if (confirmacao.equalsIgnoreCase("S")) {
             try {
-                profissionalDAO.deletarProfissional(idOpt.get());
+                profissionalController.deletar(idOpt.get());
             } catch (RuntimeException e) {
                 System.err.println("Erro ao deletar profissional: " + e.getMessage());
             }

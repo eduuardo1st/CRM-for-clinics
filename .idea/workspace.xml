@@ -4,10 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9eb41218-c571-4068-b54d-9e69c2ebd044" name="Changes" comment="">
+    <list default="true" id="9eb41218-c571-4068-b54d-9e69c2ebd044" name="Changes" comment="Refatorção - Paciente">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/CrmApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/CrmApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/view/MenuProfissional.java" beforeDir="false" afterPath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/view/MenuProfissional.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/dao/IBaseDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/dao/IBaseDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/dao/IProfissionalDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/dao/IProfissionalDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/dao/UsuarioDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/dao/implement/PacienteDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/dao/implement/PacienteDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/dao/implement/ProfissionalDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/dao/implement/ProfissionalDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/model/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/model/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/service/AgendaService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/service/AutenticacaoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/controller/AutenticacaoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/service/IBaseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/controller/IBaseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/service/IPacienteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/controller/IPacienteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/service/IProfissionalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/controller/IProfissionalController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/service/implement/PacienteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/controller/implement/PacienteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/service/implement/ProfissionalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/controller/implement/ProfissionalController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/view/MenuAgenda.java" beforeDir="false" afterPath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/view/MenuAgenda.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/view/MenuPaciente.java" beforeDir="false" afterPath="$PROJECT_DIR$/DECAD/src/main/java/com/decad/crm/view/MenuPaciente.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +33,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -33,7 +50,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/eduuardo1st/CRM-for-clinics.git&quot;,
-    &quot;accountId&quot;: &quot;f438beac-2bea-4ff6-be94-a544bc618c51&quot;
+    &quot;accountId&quot;: &quot;9ec44186-29a3-4277-87e6-39ce7986efdd&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -97,8 +114,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.23892.409" />
+        <option value="bundled-js-predefined-d6986cc7102b-e03c56caf84a-JavaScript-IU-252.23892.409" />
       </set>
     </attachedChunks>
   </component>
@@ -117,10 +134,27 @@
       <workItem from="1760916073928" duration="3816000" />
       <workItem from="1761706622796" duration="700000" />
       <workItem from="1761707340906" duration="321000" />
+      <workItem from="1761737756730" duration="124000" />
+      <workItem from="1762121058121" duration="432000" />
+      <workItem from="1762138721454" duration="27000" />
+      <workItem from="1762193212359" duration="6005000" />
     </task>
+    <task id="LOCAL-00001" summary="Refatorção - Paciente">
+      <option name="closed" value="true" />
+      <created>1761737851322</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1761737851323</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Refatorção - Paciente" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refatorção - Paciente" />
   </component>
 </project>

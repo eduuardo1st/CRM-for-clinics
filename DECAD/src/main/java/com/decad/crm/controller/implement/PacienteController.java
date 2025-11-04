@@ -1,26 +1,31 @@
-package com.decad.crm.service.implement;
+package com.decad.crm.controller.implement;
 
 import com.decad.crm.dao.IPacienteDAO;
 import com.decad.crm.model.Paciente;
-import com.decad.crm.service.IPacienteService;
+import com.decad.crm.controller.IPacienteController;
 
 import java.util.List;
 import java.util.Optional;
 
-public class PacienteService implements  IPacienteService {
+public class PacienteController implements IPacienteController {
 
     private final IPacienteDAO pacienteDAO;
 
-    public PacienteService(IPacienteDAO pacienteDAO) {
+    public PacienteController(IPacienteDAO pacienteDAO) {
         this.pacienteDAO = pacienteDAO;
     }
 
     @Override
-    public void salvar(Paciente paciente) {
+    public void salvarComValidacao(Paciente paciente) {
 
         if(paciente.getCpf() == null || paciente.getCpf().isEmpty()) {
 
-            throw new RuntimeException("CPF é obrigatório!");
+            throw new RuntimeException("CPF obrigatório!");
+        }
+
+        if(pacienteDAO.buscarPorCPF(paciente.getCpf()).isPresent()) {
+
+            throw new RuntimeException("Paciente já cadastrado!");
         }
 
         pacienteDAO.salvar(paciente);
@@ -39,6 +44,11 @@ public class PacienteService implements  IPacienteService {
     @Override
     public Optional<Paciente> buscarPorId(long id) {
         return pacienteDAO.buscarPorId(id);
+    }
+
+    @Override
+    public Optional<Paciente> buscarPorCPF(String cpf) {
+        return pacienteDAO.buscarPorCPF(cpf);
     }
 
     @Override
