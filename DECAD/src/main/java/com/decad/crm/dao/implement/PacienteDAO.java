@@ -2,7 +2,6 @@ package com.decad.crm.dao.implement;
 
 import com.decad.crm.dao.IPacienteDAO;
 import com.decad.crm.model.Paciente;
-import com.decad.crm.model.Profissional;
 import com.decad.crm.util.ConectorBancoDeDados;
 
 import java.sql.*;
@@ -14,7 +13,7 @@ public class PacienteDAO implements IPacienteDAO{
     // Usei ResultSet para pegar os dados das consultas SQL que realizei, então sempre que ver ResultSet no
     // código quer dizer que estou pegando os dados da consulta SQL
 
-    private final String SQL_todos_campos = "SELECT IdPaciente, nomeCompleto, email, cpf, telefone FROM Paciente WHERE IdPaciente = ?";
+    private final String SQL_todos_campos = "SELECT IdPaciente, nomeCompleto, email, cpf, telefone FROM Paciente";
 
     @Override
     public void salvar(Paciente paciente) {

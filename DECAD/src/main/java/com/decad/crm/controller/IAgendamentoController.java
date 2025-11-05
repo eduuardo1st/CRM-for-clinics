@@ -13,5 +13,5 @@ public interface IAgendamentoController {
 
     List<Agendamento> buscarPorProfissionalEData(long idProfissional, LocalDate data);
 
-    List<String> getHorariosDisponiveis(int idProfissional, LocalDate data);
+    List<String> getHorariosDisponiveis(long idProfissional, LocalDate data);
 }

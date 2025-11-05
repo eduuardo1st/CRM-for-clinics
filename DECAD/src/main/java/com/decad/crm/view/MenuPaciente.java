@@ -39,12 +39,6 @@ public class MenuPaciente extends MenuCrudBase {
         System.out.print("Telefone: ");
         String telefone = scanner.nextLine();
 
-        if (nome.isEmpty() || cpf.isEmpty()) {
-            System.err.println("Erro: Nome e CPF são campos obrigatórios.");
-            pausar();
-            return;
-        }
-
         Paciente novoPaciente = new Paciente(nome, email, cpf, telefone);
 
         try {
@@ -101,7 +95,7 @@ public class MenuPaciente extends MenuCrudBase {
 
         Optional<Paciente> pacienteOpt = pacienteController.buscarPorId(idOpt.get());
         if (pacienteOpt.isEmpty()) {
-            System.err.println("Paciente com ID " + idOpt.get() + " não encontrado.");
+            System.err.println("ERRO! Nenhum paciente possui o ID informado!");
             pausar();
             return;
         }
@@ -139,6 +133,13 @@ public class MenuPaciente extends MenuCrudBase {
 
         Optional<Long> idOpt = pedirId("Digite o ID do paciente que deseja DELETAR: ");
         if (idOpt.isEmpty()) return;
+
+        Optional<Paciente> pacienteOpt = pacienteController.buscarPorId(idOpt.get());
+        if (pacienteOpt.isEmpty()) {
+            System.err.println("ERRO! Nenhum paciente possui o ID informado!");
+            pausar();
+            return;
+        }
 
         System.err.print("ATENÇÃO: Isso é permanente. Tem certeza que deseja deletar o paciente ID " + idOpt.get() + "? (S/N): ");
         String confirmacao = scanner.nextLine();

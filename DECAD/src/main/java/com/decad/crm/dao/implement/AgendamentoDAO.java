@@ -6,6 +6,7 @@ import com.decad.crm.util.ConectorBancoDeDados;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,15 +46,40 @@ public class AgendamentoDAO implements IAgendamentoDAO {
 
             stmt.setLong(1, id);
             int rowsAffected = stmt.executeUpdate();
+
             if (rowsAffected > 0) {
                 System.out.println("Agendamento deletado com sucesso!");
             } else {
-                System.out.println("Nenhum agendamento encontrado com o ID.");
+                System.out.println("ERRO! Nenhum agendamento encontrado com o ID.");
             }
         } catch (SQLException e) {
             System.err.println("Erro ao deletar Agendamento: " + e.getMessage());
             throw new RuntimeException("Erro ao deletar Agendamento.", e);
         }
+    }
+
+    @Override
+    public boolean checarConflito(long idProfissional, LocalDate data, LocalTime hora) {
+        String sql = "SELECT COUNT(1) FROM Agendamento WHERE IdProfissional = ? AND dataAgendamento = ? AND horaAgendamento = ?";
+
+        try (Connection conexao = ConectorBancoDeDados.conectar();
+             PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setLong(1, idProfissional);
+            stmt.setDate(2, Date.valueOf(data));
+            stmt.setTime(3, Time.valueOf(hora));
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    // Se o count for maior que 0, já existe no bd
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao verificar conflito de agendamento: " + e.getMessage());
+            throw new RuntimeException("Erro ao verificar conflito.", e);
+        }
+        return false;
     }
 
     @Override
@@ -79,35 +105,29 @@ public class AgendamentoDAO implements IAgendamentoDAO {
         return agendamentos;
     }
 
-    // Método para obter horários disponíveis para um profissional em uma data específica
+    // Método para obter horários ocupados para um profissional em uma data específica
     @Override
-    public List<String> getHorariosDisponiveis(int idProfissional, LocalDate data) {
-        List<String> horariosDisponiveis = new ArrayList<>();
+    public List<String> getHorariosOcupados(long idProfissional, LocalDate data) {
         List<String> horariosOcupados = new ArrayList<>();
+        String sql = "SELECT horaAgendamento FROM Agendamento WHERE IdProfissional = ? AND dataAgendamento = ?";
 
-        // Horários de trabalho fixos (exemplo: 9h às 17h, intervalos de 1 hora)
-        for (int hora = 9; hora < 17; hora++) {
-            horariosDisponiveis.add(String.format("%02d:00", hora));
-        }
-
-        // Query para buscar agendamentos ocupados
-        String sql = "SELECT hora FROM agendamento WHERE id_profissional = ? AND data = ?";
         try (Connection conexao = ConectorBancoDeDados.conectar();
              PreparedStatement stmt = conexao.prepareStatement(sql)) {
-            stmt.setInt(1, idProfissional);
+
+            stmt.setLong(1, idProfissional);
             stmt.setDate(2, Date.valueOf(data));
-            ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
-                horariosOcupados.add(rs.getString("hora"));
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    // Converte Time para String no formato "HH:mm"
+                    horariosOcupados.add(rs.getTime("horaAgendamento").toLocalTime().toString());
+                }
             }
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao buscar horários ocupados.", e);
         }
-        // Remover horários ocupados
-        horariosDisponiveis.removeAll(horariosOcupados);
-        return horariosDisponiveis;
+
+        return horariosOcupados;
     }
 
     private Agendamento mapearResultSetParaAgendamento(ResultSet rs) throws SQLException {

@@ -4,9 +4,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MenuPrincipal {
-    private Scanner scanner = new Scanner(System.in);
 
-    public MenuPrincipal() {
+    private Scanner scanner;
+
+    public MenuPrincipal(Scanner scanner) {
         this.scanner = scanner;
     }
 
@@ -25,7 +26,7 @@ public class MenuPrincipal {
             System.out.print("Digite sua opção: ");
 
             try {
-                escolha = scanner.nextInt();
+                escolha = Integer.parseInt(scanner.nextLine());
 
                 if (escolha >= 0 && escolha <= 3) {
                     return escolha;
@@ -33,17 +34,9 @@ public class MenuPrincipal {
                     System.err.println("Opção inválida! Por favor, escolha um número entre 0 e 3.");
                 }
 
-            } catch (InputMismatchException e) {
+            } catch (NumberFormatException e) {
                 System.err.println("Erro: Você deve digitar um NÚMERO, não letras ou símbolos.");
-
-                scanner.nextLine();
             }
         }
     }
-
-    public void fecharScanner() {
-        System.out.println("Encerrando o sistema de entrada...");
-        this.scanner.close();
-    }
 }
-
