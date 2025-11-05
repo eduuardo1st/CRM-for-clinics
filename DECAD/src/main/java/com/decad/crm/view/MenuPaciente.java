@@ -95,7 +95,7 @@ public class MenuPaciente extends MenuCrudBase {
 
         Optional<Paciente> pacienteOpt = pacienteController.buscarPorId(idOpt.get());
         if (pacienteOpt.isEmpty()) {
-            System.err.println("Paciente com ID " + idOpt.get() + " não encontrado.");
+            System.err.println("ERRO! Nenhum paciente possui o ID informado!");
             pausar();
             return;
         }
@@ -133,6 +133,13 @@ public class MenuPaciente extends MenuCrudBase {
 
         Optional<Long> idOpt = pedirId("Digite o ID do paciente que deseja DELETAR: ");
         if (idOpt.isEmpty()) return;
+
+        Optional<Paciente> pacienteOpt = pacienteController.buscarPorId(idOpt.get());
+        if (pacienteOpt.isEmpty()) {
+            System.err.println("ERRO! Nenhum paciente possui o ID informado!");
+            pausar();
+            return;
+        }
 
         System.err.print("ATENÇÃO: Isso é permanente. Tem certeza que deseja deletar o paciente ID " + idOpt.get() + "? (S/N): ");
         String confirmacao = scanner.nextLine();

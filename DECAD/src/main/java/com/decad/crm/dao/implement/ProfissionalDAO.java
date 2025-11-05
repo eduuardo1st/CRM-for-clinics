@@ -62,8 +62,6 @@ public class ProfissionalDAO implements IProfissionalDAO {
             int linhasAfetadas = statement.executeUpdate();
             if (linhasAfetadas > 0) {
                 System.out.println("Profissional atualizado com sucesso!");
-            } else {
-                System.out.println("ERRO! Nenhum profissional possui o ID informado!");
             }
 
         } catch (SQLException e) {
@@ -83,8 +81,6 @@ public class ProfissionalDAO implements IProfissionalDAO {
             int linhasAfetadas = statement.executeUpdate();
             if (linhasAfetadas > 0) {
                 System.out.println("Profissional deletado com sucesso!");
-            } else {
-                System.out.println("ERRO! Nenhum profissional possui o ID informado!");
             }
 
         } catch (SQLException e) {

@@ -102,7 +102,7 @@ public class MenuProfissional extends MenuCrudBase {
         Optional<Profissional> profOpt = profissionalController.buscarPorId(idOpt.get());
 
         if (profOpt.isEmpty()) {
-            System.err.println("Profissional com ID " + idOpt.get() + " não encontrado.");
+            System.err.println("ERRO! Nenhum profissional possui o ID informado!");
             pausar();
             return;
         }
@@ -149,6 +149,14 @@ public class MenuProfissional extends MenuCrudBase {
 
         Optional<Long> idOpt = pedirId("Digite o ID do profissional que deseja DELETAR: ");
         if (idOpt.isEmpty()) return;
+
+        Optional<Profissional> profOpt = profissionalController.buscarPorId(idOpt.get());
+
+        if (profOpt.isEmpty()) {
+            System.err.println("ERRO! Nenhum profissional possui o ID informado!");
+            pausar();
+            return;
+        }
 
         System.err.print("ATENÇÃO: Isso é permanente. Tem certeza que deseja deletar o profissional ID " + idOpt.get() + "? (S/N): ");
         String confirmacao = scanner.nextLine();

@@ -2,7 +2,6 @@ package com.decad.crm.dao.implement;
 
 import com.decad.crm.dao.IPacienteDAO;
 import com.decad.crm.model.Paciente;
-import com.decad.crm.model.Profissional;
 import com.decad.crm.util.ConectorBancoDeDados;
 
 import java.sql.*;

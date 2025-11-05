@@ -6,6 +6,7 @@ import com.decad.crm.util.ConectorBancoDeDados;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,12 +50,36 @@ public class AgendamentoDAO implements IAgendamentoDAO {
             if (rowsAffected > 0) {
                 System.out.println("Agendamento deletado com sucesso!");
             } else {
-                System.out.println("Nenhum agendamento encontrado com o ID.");
+                System.out.println("ERRO! Nenhum agendamento encontrado com o ID.");
             }
         } catch (SQLException e) {
             System.err.println("Erro ao deletar Agendamento: " + e.getMessage());
             throw new RuntimeException("Erro ao deletar Agendamento.", e);
         }
+    }
+
+    @Override
+    public boolean checarConflito(long idProfissional, LocalDate data, LocalTime hora) {
+        String sql = "SELECT COUNT(1) FROM Agendamento WHERE IdProfissional = ? AND dataAgendamento = ? AND horaAgendamento = ?";
+
+        try (Connection conexao = ConectorBancoDeDados.conectar();
+             PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setLong(1, idProfissional);
+            stmt.setDate(2, Date.valueOf(data));
+            stmt.setTime(3, Time.valueOf(hora));
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    // Se o count for maior que 0, já existe no bd
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao verificar conflito de agendamento: " + e.getMessage());
+            throw new RuntimeException("Erro ao verificar conflito.", e);
+        }
+        return false;
     }
 
     @Override

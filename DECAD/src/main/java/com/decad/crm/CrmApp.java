@@ -73,7 +73,7 @@ public class CrmApp {
                     menuProfissional.exibirMenu();
                     break;
                 case 3:
-                    menuAgenda.mostrarConsultarAgenda();
+                    menuAgenda.exibirMenu();
                     break;
                 case 0:
                     executando = false;

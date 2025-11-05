@@ -26,8 +26,6 @@ public class AutenticacaoController implements IAutenticacaoController {
                     return true;
                 }
             }
-
-            System.out.println("Falha no login: Credenciais inválidas para o usuário: " + login);
             return false;
 
         } catch (Exception e) {
