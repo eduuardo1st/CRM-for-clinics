@@ -8,7 +8,6 @@ import java.sql.SQLException;
 
 public class ConectorBancoDeDados {
     public static Connection conectar(){
-        System.out.println("Conectando ao banco de dados...");
         try{
             Dotenv dotenv = Dotenv.load();
 
@@ -16,7 +15,6 @@ public class ConectorBancoDeDados {
             String user = dotenv.get("DB_USER");
             String password = dotenv.get("DB_PASSWORD");
 
-            System.out.println("Banco de dados conectado");
             return DriverManager.getConnection(url, user, password);
         } catch(SQLException e){
             throw new RuntimeException("Erro ao conectar ao banco de dados!", e);
